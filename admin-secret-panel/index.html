@@ -32,7 +32,7 @@
 </div>
 
 <!-- ══ ADMIN DASHBOARD ══════════════════════════════════ -->
-<div id="adminApp" style="display:none;width:100%;min-height:100vh;display:none;flex-direction:row">
+<div id="adminApp" style="display:none;width:100%;min-height:100vh;flex-direction:row">
 
   <!-- Sidebar -->
   <aside class="admin-sidebar" id="adminSidebar">
@@ -174,18 +174,13 @@
           <div class="admin-card-body">
             <input type="hidden" id="editCarId">
 
-            <!-- Images first -->
-            <h3 style="font-size:15px;color:#94a3b8;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #334155">📸 Car Images</h3>
-            <div class="image-drop-zone" id="imageDropZone" onclick="document.getElementById('imageFileInput').click()">
-              <input type="file" id="imageFileInput" accept="image/*" multiple onchange="handleImageFiles(this.files)">
-              <div class="image-drop-icon">📷</div>
-              <div class="image-drop-text">Drag &amp; drop images here, or <span>click to upload</span></div>
-              <div style="font-size:12px;color:#475569;margin-top:6px">JPG, PNG, WEBP · Max 5MB each · Multiple allowed</div>
+            <!-- Images via URL (Cloudinary integration coming soon) -->
+            <h3 style="font-size:15px;color:#94a3b8;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #334155">📸 Car Images <span style="font-size:11px;font-weight:400;color:#475569">— paste image URLs below</span></h3>
+            <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+              <input class="admin-input" type="url" id="imageUrlInput" placeholder="Paste image URL (e.g. https://res.cloudinary.com/…/car.jpg)" style="flex:1;min-width:200px">
+              <button class="btn-admin btn-admin-primary" type="button" onclick="addImageUrl()" style="white-space:nowrap">+ Add Image</button>
             </div>
-            <div id="uploadProgressWrap" style="display:none;margin-top:10px">
-              <div style="font-size:12px;color:#94a3b8;margin-bottom:4px" id="uploadProgressLabel">Uploading…</div>
-              <div class="upload-progress"><div class="upload-progress-bar" id="uploadProgressBar"></div></div>
-            </div>
+            <div style="font-size:12px;color:#475569;margin-bottom:12px">💡 Upload to <a href="https://cloudinary.com" target="_blank" style="color:#3b82f6">Cloudinary.com</a> (free) → copy the URL → paste above. You can add multiple images.</div>
             <div class="image-preview-grid" id="imagePreviewGrid"></div>
             <input type="hidden" id="carImages" value="[]">
             <input type="hidden" id="carThumbnail" value="">
@@ -195,7 +190,7 @@
               <div class="admin-form-group"><label class="admin-label">Car Title *</label><input class="admin-input" id="carTitle" placeholder="e.g. 2020 Maruti Suzuki Swift VXI Manual"></div>
               <div class="admin-form-group"><label class="admin-label">Brand *</label><input class="admin-input" id="carBrand" list="brandSuggestions" placeholder="Maruti Suzuki">
                 <datalist id="brandSuggestions">
-                  ${['Maruti Suzuki','Hyundai','Tata','Honda','Toyota','Ford','Volkswagen','Kia','Renault','Mahindra','Nissan','Skoda','MG','Jeep','BMW','Mercedes','Audi'].map(b=>`<option value="${b}">`).join('')}
+                  <option value="Maruti Suzuki"><option value="Hyundai"><option value="Tata"><option value="Honda"><option value="Toyota"><option value="Ford"><option value="Volkswagen"><option value="Kia"><option value="Renault"><option value="Mahindra"><option value="Nissan"><option value="Skoda"><option value="MG"><option value="Jeep"><option value="BMW"><option value="Mercedes"><option value="Audi">
                 </datalist>
               </div>
             </div>
@@ -211,13 +206,22 @@
               <div class="admin-form-group"><label class="admin-label">Fuel Type *</label>
                 <select class="admin-select" id="carFuel">
                   <option value="">Select Fuel</option>
-                  ${['Petrol','Diesel','CNG','Electric','Hybrid','LPG'].map(f=>`<option value="${f}">${f}</option>`).join('')}
+                  <option value="Petrol">Petrol</option>
+                  <option value="Diesel">Diesel</option>
+                  <option value="CNG">CNG</option>
+                  <option value="Electric">Electric</option>
+                  <option value="Hybrid">Hybrid</option>
+                  <option value="LPG">LPG</option>
                 </select>
               </div>
               <div class="admin-form-group"><label class="admin-label">Transmission</label>
                 <select class="admin-select" id="carTrans">
                   <option value="">Select</option>
-                  ${['Manual','Automatic','AMT','CVT','DCT'].map(t=>`<option value="${t}">${t}</option>`).join('')}
+                  <option value="Manual">Manual</option>
+                  <option value="Automatic">Automatic</option>
+                  <option value="AMT">AMT</option>
+                  <option value="CVT">CVT</option>
+                  <option value="DCT">DCT</option>
                 </select>
               </div>
             </div>
@@ -225,7 +229,11 @@
               <div class="admin-form-group"><label class="admin-label">KM Driven</label><input class="admin-input" type="number" id="carKm" placeholder="45000"></div>
               <div class="admin-form-group"><label class="admin-label">Owner</label>
                 <select class="admin-select" id="carOwner">
-                  ${['1st Owner','2nd Owner','3rd Owner','4th+ Owner','Company Car'].map(o=>`<option value="${o}">${o}</option>`).join('')}
+                  <option value="1st Owner">1st Owner</option>
+                  <option value="2nd Owner">2nd Owner</option>
+                  <option value="3rd Owner">3rd Owner</option>
+                  <option value="4th+ Owner">4th+ Owner</option>
+                  <option value="Company Car">Company Car</option>
                 </select>
               </div>
             </div>
@@ -238,7 +246,14 @@
               <div class="admin-form-group"><label class="admin-label">Body Type</label>
                 <select class="admin-select" id="carBodyType">
                   <option value="">Select</option>
-                  ${['Hatchback','Sedan','SUV','MUV','Crossover','Coupe','Convertible','Pickup'].map(b=>`<option value="${b}">${b}</option>`).join('')}
+                  <option value="Hatchback">Hatchback</option>
+                  <option value="Sedan">Sedan</option>
+                  <option value="SUV">SUV</option>
+                  <option value="MUV">MUV</option>
+                  <option value="Crossover">Crossover</option>
+                  <option value="Coupe">Coupe</option>
+                  <option value="Convertible">Convertible</option>
+                  <option value="Pickup">Pickup</option>
                 </select>
               </div>
             </div>
@@ -401,10 +416,9 @@
 
 <script type="module">
 import {
-  db, storage, auth,
+  db, auth,
   collection, doc, getDocs, getDoc, addDoc, updateDoc, deleteDoc,
   query, where, orderBy, limit, serverTimestamp, onSnapshot,
-  ref, uploadBytesResumable, getDownloadURL, deleteObject,
   signInWithEmailAndPassword, signOut, onAuthStateChanged,
   setPersistence, browserLocalPersistence
 } from '../assets/js/firebase-config.js';
@@ -708,61 +722,45 @@ window.toggleFeatured = async function(id, isFeatured) {
   } catch(e) { adminToast('Error: '+e.message,'error'); }
 };
 
-/* ─── IMAGE UPLOAD ──────────────────────────────────── */
-const dropZone = document.getElementById('imageDropZone');
-dropZone?.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-dropZone?.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-dropZone?.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); handleImageFiles(e.dataTransfer.files); });
+/* ─── IMAGE URL MANAGEMENT ───────────────────────────
+   Cloudinary integration coming soon.
+   For now: upload your image to cloudinary.com (free),
+   copy the URL, and paste it below.
+─────────────────────────────────────────────────────── */
 
-window.handleImageFiles = async function(files) {
-  if (!files?.length) return;
-  const progress = document.getElementById('uploadProgressWrap');
-  const bar = document.getElementById('uploadProgressBar');
-  const label = document.getElementById('uploadProgressLabel');
-  progress.style.display = 'block';
+// Enter key on URL input
+document.getElementById('imageUrlInput')?.addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); addImageUrl(); }
+});
+
+window.addImageUrl = function() {
+  const input = document.getElementById('imageUrlInput');
+  const url = input.value.trim();
+  if (!url) { adminToast('Please enter an image URL', 'error'); return; }
+  if (!/^https?:\/\/.+\..+/.test(url)) { adminToast('Please enter a valid URL starting with http(s)://', 'error'); return; }
 
   let images = [];
   try { images = JSON.parse(document.getElementById('carImages').value || '[]'); } catch(e){}
 
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    if (file.size > 5 * 1024 * 1024) { adminToast(`${file.name} is too large (max 5MB)`, 'error'); continue; }
-    label.textContent = `Uploading ${i+1} of ${files.length}: ${file.name}`;
-    try {
-      const url = await uploadImage(file, p => { bar.style.width = p + '%'; });
-      images.push(url);
-    } catch(e) { adminToast('Upload failed: ' + e.message, 'error'); }
-  }
-
+  if (images.includes(url)) { adminToast('This URL is already added', 'info'); return; }
+  images.push(url);
   document.getElementById('carImages').value = JSON.stringify(images);
-  if (!document.getElementById('carThumbnail').value && images.length) {
-    document.getElementById('carThumbnail').value = images[0];
+  if (!document.getElementById('carThumbnail').value) {
+    document.getElementById('carThumbnail').value = url;
   }
   renderImagePreviews(images, document.getElementById('carThumbnail').value);
-  progress.style.display = 'none';
+  input.value = '';
+  adminToast('✓ Image added', 'info');
 };
-
-async function uploadImage(file, onProgress) {
-  const ext = file.name.split('.').pop().toLowerCase();
-  const path = `cars/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-  const storageRef = ref(storage, path);
-  return new Promise((resolve, reject) => {
-    const task = uploadBytesResumable(storageRef, file);
-    task.on('state_changed',
-      snap => onProgress(Math.round(snap.bytesTransferred/snap.totalBytes*100)),
-      reject,
-      async () => resolve(await getDownloadURL(task.snapshot.ref))
-    );
-  });
-}
 
 function renderImagePreviews(images, featured) {
   const grid = document.getElementById('imagePreviewGrid');
+  if (!images.length) { grid.innerHTML = ''; return; }
   grid.innerHTML = images.map((src, i) => `
     <div class="image-preview-item ${src===featured?'is-featured':''}" data-src="${src}" data-idx="${i}">
-      <img src="${src}" alt="Preview ${i+1}" loading="lazy">
+      <img src="${src}" alt="Preview ${i+1}" loading="lazy" onerror="this.src='';this.parentElement.style.background='#334155'">
       <div class="img-actions">
-        <button class="img-action-btn img-feature-btn" onclick="setFeatured('${src}')" title="Set as thumbnail">★</button>
+        <button class="img-action-btn img-feature-btn" onclick="setFeatured('${src.replace(/'/g,'&apos;')}')" title="Set as thumbnail">★</button>
         <button class="img-action-btn img-delete-btn" onclick="removeImage(${i})" title="Remove">✕</button>
       </div>
       <span class="featured-badge">Thumbnail</span>

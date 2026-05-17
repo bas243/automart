@@ -4,10 +4,9 @@
  */
 
 import {
-  db, storage,
+  db,
   collection, doc, getDocs, getDoc, addDoc, updateDoc, deleteDoc,
-  query, where, orderBy, limit, onSnapshot, serverTimestamp,
-  ref, getDownloadURL
+  query, where, orderBy, limit, onSnapshot, serverTimestamp
 } from './firebase-config.js';
 
 /* ═══════════════════════════════════════════════════════════

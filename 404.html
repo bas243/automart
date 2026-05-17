@@ -1,39 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>404 — Page Not Found — AutoMart</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&family=DM+Sans:wght@400;600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
-<div id="site-header"></div>
-<div style="background:var(--color-light);min-height:70vh;display:flex;align-items:center;padding:60px 0">
-  <div class="container" style="text-align:center">
-    <div style="font-size:120px;line-height:1;font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--color-primary);opacity:.12">404</div>
-    <div style="margin-top:-80px;position:relative;z-index:1">
-      <div style="font-size:64px;margin-bottom:20px">🚗</div>
-      <h1 style="font-size:clamp(28px,4vw,44px);margin-bottom:16px">Oops! Road Ends Here</h1>
-      <p style="color:var(--color-gray);font-size:18px;margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto">The page you're looking for has driven off. It may have been moved, deleted, or the URL might be wrong.</p>
-      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:48px">
-        <a href="index.html" class="btn btn-primary btn-lg">🏠 Go Home</a>
-        <a href="pages/cars.html" class="btn btn-outline btn-lg">🚗 Browse Cars</a>
-      </div>
-      <div style="max-width:480px;margin:0 auto">
-        <p style="font-size:14px;color:var(--color-gray);margin-bottom:12px">Or search for what you need:</p>
-        <div style="display:flex;gap:8px">
-          <input type="search" id="s404" placeholder="Search cars, brands..." style="flex:1;padding:12px 16px;border:1px solid var(--color-border);border-radius:8px;font-size:14px;outline:none">
-          <button onclick="window.location.href='pages/cars.html?search='+document.getElementById('s404').value" class="btn btn-primary">Search</button>
+  <div id="site-header"></div>
+  <div style="background:var(--color-light);min-height:70vh;display:flex;align-items:center;padding:60px 0">
+    <div class="container" style="text-align:center">
+      <div
+        style="font-size:120px;line-height:1;font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--color-primary);opacity:.12">
+        404</div>
+      <div style="margin-top:-80px;position:relative;z-index:1">
+        <div style="font-size:64px;margin-bottom:20px">🚗</div>
+        <h1 style="font-size:clamp(28px,4vw,44px);margin-bottom:16px">Oops! Road Ends Here</h1>
+        <p
+          style="color:var(--color-gray);font-size:18px;margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto">
+          The page you're looking for has driven off. It may have been moved, deleted, or the URL might be wrong.</p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:48px">
+          <a href="index.html" class="btn btn-primary btn-lg">🏠 Go Home</a>
+          <a href="pages/cars.html" class="btn btn-outline btn-lg">🚗 Browse Cars</a>
+        </div>
+        <div style="max-width:480px;margin:0 auto">
+          <p style="font-size:14px;color:var(--color-gray);margin-bottom:12px">Or search for what you need:</p>
+          <div style="display:flex;gap:8px">
+            <input type="search" id="s404" placeholder="Search cars, brands..."
+              style="flex:1;padding:12px 16px;border:1px solid var(--color-border);border-radius:8px;font-size:14px;outline:none">
+            <button onclick="window.location.href='pages/cars.html?search='+document.getElementById('s404').value"
+              class="btn btn-primary">Search</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div id="site-footer"></div>
-<script type="module">
-import { injectHeader, injectFooter } from './assets/js/app.js';
-injectHeader(); injectFooter();
-</script>
+  <div id="site-footer"></div>
+  <script type="module">
+    import { injectHeader, injectFooter } from './assets/js/app.js';
+    injectHeader(); injectFooter();
+  </script>
 </body>
+
 </html>
