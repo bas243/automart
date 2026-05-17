@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Used Cars for Sale — AutoMart</title>
+  <meta name="description" content="Browse thousands of verified used cars. Filter by brand, price, fuel type and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <h1>Used Cars for Sale</h1>
+    <div class="breadcrumb"><a href="../index.html">Home</a><span class="sep">›</span><span class="current">Used Cars</span></div>
+  </div>
+</div>
+
+<div style="background:var(--color-light);min-height:60vh;padding-bottom:40px">
+  <div class="container">
+
+    <!-- Mobile filter toggle -->
+    <div style="padding:14px 0 0" id="mobileFilterBar">
+      <button id="mobileFilterToggle" style="display:none;width:100%;padding:11px;background:var(--color-charcoal);color:white;border:none;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;margin-bottom:12px">🔍 Show Filters</button>
+    </div>
+
+    <div class="listing-layout">
+
+      <!-- ══ FILTER SIDEBAR ══ -->
+      <aside class="filter-sidebar" id="filterSidebar">
+        <div class="filter-title">
+          <span>🔍 Filters</span>
+          <a href="cars.html" class="filter-clear" id="clearAllFilters">Clear All</a>
+        </div>
+
+        <!-- Search -->
+        <div class="filter-group">
+          <div class="filter-group-title">Search</div>
+          <input type="search" id="filterSearch" placeholder="Brand, model, keyword..." style="width:100%;padding:10px 12px;border:1px solid var(--color-border);border-radius:6px;font-size:13px;outline:none">
+        </div>
+
+        <!-- Price -->
+        <div class="filter-group">
+          <div class="filter-group-title">Price Range (₹ Lakhs)</div>
+          <div style="display:flex;gap:8px;margin-bottom:10px">
+            <input type="number" id="minPrice" placeholder="Min" step="0.5" min="0" style="width:50%;padding:8px;border:1px solid var(--color-border);border-radius:6px;font-size:13px">
+            <input type="number" id="maxPrice" placeholder="Max" step="0.5" style="width:50%;padding:8px;border:1px solid var(--color-border);border-radius:6px;font-size:13px">
+          </div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            ${[['<2L','0','2'],['2-5L','2','5'],['5-10L','5','10'],['10-20L','10','20'],['20-40L','20','40'],['>40L','40','999']].map(([l,mn,mx])=>`<button class="budget-chip" data-min="${mn}" data-max="${mx}" style="padding:4px 9px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">${l}</button>`).join('')}
+          </div>
+        </div>
+
+        <!-- Brand -->
+        <div class="filter-group">
+          <div class="filter-group-title">Brand</div>
+          <div class="filter-options" id="brandFilters">
+            ${['Maruti Suzuki','Hyundai','Tata Motors','Honda','Toyota','Ford','Volkswagen','Kia','Renault','Mahindra'].map(b=>`
+              <label class="filter-check">
+                <input type="radio" name="brand" value="${b}">
+                ${b}
+              </label>`).join('')}
+          </div>
+        </div>
+
+        <!-- Fuel -->
+        <div class="filter-group">
+          <div class="filter-group-title">Fuel Type</div>
+          <div class="filter-options">
+            ${['Petrol','Diesel','CNG','Electric','Hybrid'].map(f=>`
+              <label class="filter-check"><input type="radio" name="fuel" value="${f}">${f}</label>`).join('')}
+          </div>
+        </div>
+
+        <!-- Transmission -->
+        <div class="filter-group">
+          <div class="filter-group-title">Transmission</div>
+          <div class="filter-options">
+            ${['Manual','Automatic','AMT','CVT'].map(t=>`
+              <label class="filter-check"><input type="radio" name="trans" value="${t}">${t}</label>`).join('')}
+          </div>
+        </div>
+
+        <!-- Year -->
+        <div class="filter-group">
+          <div class="filter-group-title">Year (From)</div>
+          <select id="minYear" style="width:100%;padding:10px;border:1px solid var(--color-border);border-radius:6px;font-size:13px">
+            <option value="">Any Year</option>
+            ${Array.from({length:26},(_,i)=>2025-i).map(y=>`<option value="${y}">${y}</option>`).join('')}
+          </select>
+        </div>
+
+        <!-- KM -->
+        <div class="filter-group">
+          <div class="filter-group-title">Max KM Driven</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            ${[['<20k','20000'],['<50k','50000'],['<80k','80000'],['<1.5L','150000']].map(([l,v])=>`<button class="km-chip" data-km="${v}" style="padding:5px 9px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">${l}</button>`).join('')}
+          </div>
+        </div>
+
+        <button id="applyFilters" style="width:100%;padding:12px;background:var(--color-primary);color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px;margin-top:4px">Apply Filters</button>
+      </aside>
+
+      <!-- ══ LISTINGS ══ -->
+      <main>
+        <div class="listing-controls">
+          <div class="results-count">Showing <strong id="resultsCount">…</strong> cars</div>
+          <select class="sort-select" id="sortSelect">
+            <option value="date">Newest First</option>
+            <option value="price_low">Price: Low to High</option>
+            <option value="price_high">Price: High to Low</option>
+            <option value="km_low">Lowest KM</option>
+            <option value="year_new">Newest Model Year</option>
+          </select>
+        </div>
+
+        <!-- Active filter chips -->
+        <div id="activeFilters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px"></div>
+
+        <div class="cars-grid" id="carsGrid">
+          ${Array(8).fill(`<div class="car-card"><div class="car-card-image skeleton" style="height:185px"></div><div class="car-card-body"><div class="skeleton" style="height:18px;margin-bottom:8px;border-radius:4px"></div><div class="skeleton" style="height:14px;width:60%;border-radius:4px;margin-bottom:16px"></div><div class="skeleton" style="height:36px;border-radius:6px"></div></div></div>`).join('')}
+        </div>
+
+        <div class="pagination" id="pagination"></div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+
+<style>
+.skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.budget-chip.active,.km-chip.active{background:var(--color-primary);color:white;border-color:var(--color-primary)}
+.filter-check input[type=radio]{accent-color:var(--color-primary)}
+</style>
+
+<script type="module">
+import { injectHeader, injectFooter, getCars, renderCarCard, initWishlist, initBackToTop, getSampleCars, getUrlParam } from '../assets/js/app.js';
+
+injectHeader();
+injectFooter();
+initWishlist();
+initBackToTop();
+
+const CARS_PER_PAGE = 12;
+let allCars = [];
+let currentPage = 1;
+let filters = {};
+
+// Read URL params on load
+function readUrlParams() {
+  const p = new URLSearchParams(window.location.search);
+  if (p.get('brand'))    { filters.brand    = p.get('brand');    document.querySelector(`input[name=brand][value="${p.get('brand')}"]`)?.click(); }
+  if (p.get('fuel'))     { filters.fuel     = p.get('fuel');     document.querySelector(`input[name=fuel][value="${p.get('fuel')}"]`)?.click(); }
+  if (p.get('search'))   { filters.search   = p.get('search');   document.getElementById('filterSearch').value = p.get('search'); }
+  if (p.get('minPrice')) { filters.minPrice = p.get('minPrice'); document.getElementById('minPrice').value = p.get('minPrice'); }
+  if (p.get('maxPrice')) { filters.maxPrice = p.get('maxPrice'); document.getElementById('maxPrice').value = p.get('maxPrice'); }
+  if (p.get('sort'))     { filters.sort     = p.get('sort');     document.getElementById('sortSelect').value = p.get('sort'); }
+}
+
+// Collect filter state
+function collectFilters() {
+  const brand   = document.querySelector('input[name=brand]:checked')?.value;
+  const fuel    = document.querySelector('input[name=fuel]:checked')?.value;
+  const trans   = document.querySelector('input[name=trans]:checked')?.value;
+  const search  = document.getElementById('filterSearch')?.value?.trim();
+  const minP    = document.getElementById('minPrice')?.value;
+  const maxP    = document.getElementById('maxPrice')?.value;
+  const minY    = document.getElementById('minYear')?.value;
+  const maxKm   = document.querySelector('.km-chip.active')?.dataset?.km;
+  const sort    = document.getElementById('sortSelect')?.value;
+
+  return { brand, fuel, trans, search, minPrice:minP, maxPrice:maxP, minYear:minY, maxKm, sort };
+}
+
+// Render active chip pills
+function renderActiveFilters(f) {
+  const c = document.getElementById('activeFilters');
+  if (!c) return;
+  const chips = [];
+  if (f.brand)    chips.push(['brand',    f.brand]);
+  if (f.fuel)     chips.push(['fuel',     f.fuel]);
+  if (f.trans)    chips.push(['trans',    f.trans]);
+  if (f.search)   chips.push(['search',   `"${f.search}"`]);
+  if (f.minPrice) chips.push(['minPrice', `From ₹${f.minPrice}L`]);
+  if (f.maxPrice) chips.push(['maxPrice', `To ₹${f.maxPrice}L`]);
+  c.innerHTML = chips.map(([k,v]) => `
+    <span style="display:inline-flex;align-items:center;gap:4px;background:var(--color-primary);color:white;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600">
+      ${v} <button onclick="clearFilter('${k}')" style="background:none;border:none;color:white;cursor:pointer;font-size:14px;line-height:1;padding:0 0 0 4px">×</button>
+    </span>`).join('');
+}
+
+window.clearFilter = function(key) {
+  if (key === 'brand') document.querySelector('input[name=brand]:checked')?.click();
+  if (key === 'fuel')  document.querySelector('input[name=fuel]:checked')?.click();
+  if (key === 'trans') document.querySelector('input[name=trans]:checked')?.click();
+  if (key === 'search') document.getElementById('filterSearch').value = '';
+  if (key === 'minPrice') document.getElementById('minPrice').value = '';
+  if (key === 'maxPrice') document.getElementById('maxPrice').value = '';
+  applyAndRender();
+};
+
+// Render paginated cars
+function renderPage(cars, page) {
+  const grid = document.getElementById('carsGrid');
+  const start = (page - 1) * CARS_PER_PAGE;
+  const slice = cars.slice(start, start + CARS_PER_PAGE);
+
+  document.getElementById('resultsCount').textContent = cars.length;
+
+  if (!slice.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:80px 24px;background:white;border-radius:16px;border:1px solid var(--color-border)">
+      <div style="font-size:64px;margin-bottom:16px">🔍</div>
+      <h3>No Cars Found</h3>
+      <p style="color:var(--color-gray);margin:10px 0 24px">Try adjusting your filters.</p>
+      <a href="cars.html" class="btn btn-primary">Browse All Cars</a>
+    </div>`;
+  } else {
+    grid.innerHTML = slice.map(renderCarCard).join('');
+  }
+
+  // Pagination
+  const totalPages = Math.ceil(cars.length / CARS_PER_PAGE);
+  const pag = document.getElementById('pagination');
+  if (totalPages <= 1) { pag.innerHTML = ''; return; }
+  let pages = '';
+  if (page > 1) pages += `<a class="page-num" onclick="goPage(${page-1})">‹</a>`;
+  for (let i = Math.max(1,page-2); i <= Math.min(totalPages,page+2); i++) {
+    pages += `<a class="page-num${i===page?' active':''}" onclick="goPage(${i})">${i}</a>`;
+  }
+  if (page < totalPages) pages += `<a class="page-num" onclick="goPage(${page+1})">›</a>`;
+  pag.innerHTML = pages;
+}
+
+window.goPage = function(p) {
+  currentPage = p;
+  renderPage(allCars, currentPage);
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+async function applyAndRender() {
+  const f = collectFilters();
+  filters = f;
+  renderActiveFilters(f);
+
+  const grid = document.getElementById('carsGrid');
+  grid.innerHTML = Array(6).fill(`<div class="car-card"><div class="car-card-image skeleton" style="height:185px"></div><div class="car-card-body"><div class="skeleton" style="height:18px;margin-bottom:8px;border-radius:4px"></div><div class="skeleton" style="height:36px;border-radius:6px;margin-top:auto"></div></div></div>`).join('');
+
+  try {
+    allCars = await getCars(f);
+  } catch(e) {
+    allCars = getSampleCars();
+  }
+
+  currentPage = 1;
+  renderPage(allCars, currentPage);
+}
+
+// Budget chips
+document.querySelectorAll('.budget-chip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.budget-chip').forEach(b => b.classList.remove('active'));
+    btn.classList.toggle('active');
+    document.getElementById('minPrice').value = btn.dataset.min;
+    document.getElementById('maxPrice').value = btn.dataset.max;
+  });
+});
+
+// KM chips
+document.querySelectorAll('.km-chip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.km-chip').forEach(b => b.classList.remove('active'));
+    btn.classList.toggle('active');
+  });
+});
+
+// Auto filter on radio change
+document.querySelectorAll('input[type=radio]').forEach(r => r.addEventListener('change', applyAndRender));
+
+// Sort change
+document.getElementById('sortSelect')?.addEventListener('change', applyAndRender);
+
+// Search with debounce
+let searchTimer;
+document.getElementById('filterSearch')?.addEventListener('input', () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(applyAndRender, 500);
+});
+
+// Apply button
+document.getElementById('applyFilters')?.addEventListener('click', applyAndRender);
+
+// Mobile filter toggle
+const sidebar = document.getElementById('filterSidebar');
+const mobileToggle = document.getElementById('mobileFilterToggle');
+
+function checkMobileFilter() {
+  if (window.innerWidth <= 768) {
+    mobileToggle.style.display = 'flex';
+    sidebar.style.display = 'none';
+    sidebar.classList.remove('open');
+  } else {
+    mobileToggle.style.display = 'none';
+    sidebar.style.display = 'block';
+  }
+}
+
+mobileToggle?.addEventListener('click', () => {
+  const open = sidebar.classList.toggle('open');
+  sidebar.style.display = open ? 'block' : 'none';
+  mobileToggle.textContent = open ? '✕ Close Filters' : '🔍 Show Filters';
+});
+
+window.addEventListener('resize', checkMobileFilter);
+checkMobileFilter();
+
+// Year filter change
+document.getElementById('minYear')?.addEventListener('change', applyAndRender);
+
+// Init
+readUrlParams();
+applyAndRender();
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin-secret-panel/
+
+Sitemap: https://yourusername.github.io/automart/sitemap.xml

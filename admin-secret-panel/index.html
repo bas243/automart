@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — AutoMart</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/gallery.css">
+  <style>
+    /* Sortable drag placeholder */
+    .sortable-ghost { opacity: 0.4; }
+    [data-section] { display: none; }
+    [data-section].active { display: block; }
+  </style>
+</head>
+<body class="admin-body">
+
+<!-- ══ LOGIN SCREEN ═════════════════════════════════════ -->
+<div id="loginScreen" class="admin-login-page">
+  <div class="admin-login-box">
+    <div class="admin-login-logo">🚗</div>
+    <h1 class="admin-login-title">AutoMart Admin</h1>
+    <p class="admin-login-sub">Sign in to manage your dealership</p>
+    <div class="admin-login-error" id="loginError"></div>
+    <input class="admin-login-input" type="email" id="adminEmail" placeholder="Admin Email" value="admin@automart.in" autocomplete="username">
+    <input class="admin-login-input" type="password" id="adminPassword" placeholder="Password" autocomplete="current-password">
+    <button class="admin-login-btn" id="loginBtn" onclick="doLogin()">Sign In</button>
+    <p style="margin-top:20px;font-size:12px;color:#475569">Protected admin area. Unauthorised access is prohibited.</p>
+  </div>
+</div>
+
+<!-- ══ ADMIN DASHBOARD ══════════════════════════════════ -->
+<div id="adminApp" style="display:none;width:100%;min-height:100vh;display:none;flex-direction:row">
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="admin-sidebar-logo">
+      <div class="logo-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M5 17H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l3-4h10l3 4h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg></div>
+      <div><div class="admin-logo-text">AutoMart</div><div class="admin-logo-sub">Admin Panel</div></div>
+    </div>
+    <nav class="admin-nav">
+      <div class="admin-nav-section">Main</div>
+      <button class="admin-nav-item active" onclick="showSection('dashboard',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </button>
+      <div class="admin-nav-section">Inventory</div>
+      <button class="admin-nav-item" onclick="showSection('listings',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l3-4h10l3 4h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg>
+        Car Listings
+        <span class="admin-nav-badge" id="listingCount">0</span>
+      </button>
+      <button class="admin-nav-item" onclick="showSection('add-car',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Add New Car
+      </button>
+      <button class="admin-nav-item" onclick="showSection('collections',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        Collections
+      </button>
+      <div class="admin-nav-section">Content</div>
+      <button class="admin-nav-item" onclick="showSection('enquiries',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Enquiries
+        <span class="admin-nav-badge" id="enquiryCount" style="display:none">0</span>
+      </button>
+      <button class="admin-nav-item" onclick="showSection('settings',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </button>
+      <div style="margin-top:auto;padding:12px 0 0">
+        <button class="admin-nav-item" onclick="doLogout()" style="color:#ef4444">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Sign Out
+        </button>
+        <a href="../index.html" target="_blank" class="admin-nav-item" style="margin-top:4px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          View Site
+        </a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <h1 id="sectionTitle">Dashboard</h1>
+      <div class="admin-user-menu">
+        <span style="font-size:13px;color:#64748b" id="adminEmailDisplay"></span>
+        <div class="admin-avatar" id="adminAvatarBtn">A</div>
+      </div>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- ─── DASHBOARD ─────────────────────────── -->
+      <div data-section="dashboard" class="active">
+        <div class="stats-cards">
+          <div class="stat-card-admin">
+            <div class="stat-icon-wrap" style="background:rgba(192,57,43,.15)"><svg viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2"><path d="M5 17H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l3-4h10l3 4h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg></div>
+            <div><div class="stat-value" id="ds-total">—</div><div class="stat-label">Total Listings</div></div>
+          </div>
+          <div class="stat-card-admin">
+            <div class="stat-icon-wrap" style="background:rgba(34,197,94,.15)"><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg></div>
+            <div><div class="stat-value" id="ds-available">—</div><div class="stat-label">Available</div></div>
+          </div>
+          <div class="stat-card-admin">
+            <div class="stat-icon-wrap" style="background:rgba(239,68,68,.15)"><svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+            <div><div class="stat-value" id="ds-sold">—</div><div class="stat-label">Sold</div></div>
+          </div>
+          <div class="stat-card-admin">
+            <div class="stat-icon-wrap" style="background:rgba(234,179,8,.15)"><svg viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><div class="stat-value" id="ds-enquiries">—</div><div class="stat-label">Enquiries</div></div>
+          </div>
+          <div class="stat-card-admin">
+            <div class="stat-icon-wrap" style="background:rgba(139,92,246,.15)"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div><div class="stat-value" id="ds-featured">—</div><div class="stat-label">Featured</div></div>
+          </div>
+          <div class="stat-card-admin">
+            <div class="stat-icon-wrap" style="background:rgba(20,184,166,.15)"><svg viewBox="0 0 24 24" fill="none" stroke="#14b8a6" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
+            <div><div class="stat-value" id="ds-collections">—</div><div class="stat-label">Collections</div></div>
+          </div>
+        </div>
+
+        <!-- Recent listings -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <span class="admin-card-title">Recent Listings</span>
+            <button class="btn-admin btn-admin-primary btn-admin-sm" onclick="showSection('add-car',document.querySelector('[onclick*=add-car]'))">+ Add Car</button>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="admin-table">
+              <thead><tr><th>Car</th><th>Price</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+              <tbody id="recentListingsTable"><tr><td colspan="5" style="text-align:center;padding:40px;color:#475569">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── CAR LISTINGS ──────────────────────── -->
+      <div data-section="listings">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <span class="admin-card-title">All Car Listings</span>
+            <div class="admin-search">
+              <input class="admin-search-input" type="search" id="listingSearch" placeholder="Search cars…" oninput="filterListings(this.value)">
+              <select class="admin-search-input" style="max-width:140px" id="listingStatusFilter" onchange="filterListings()">
+                <option value="">All Status</option>
+                <option value="available">Available</option>
+                <option value="sold">Sold</option>
+                <option value="reserved">Reserved</option>
+              </select>
+              <button class="btn-admin btn-admin-primary btn-admin-sm" onclick="showSection('add-car',document.querySelector('[onclick*=add-car]'))">+ Add Car</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="admin-table">
+              <thead><tr><th>Image</th><th>Car</th><th>Price</th><th>Year</th><th>KM</th><th>Status</th><th>Featured</th><th style="min-width:180px">Actions</th></tr></thead>
+              <tbody id="listingsTable"><tr><td colspan="8" style="text-align:center;padding:40px;color:#475569">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── ADD / EDIT CAR ────────────────────── -->
+      <div data-section="add-car">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <span class="admin-card-title" id="carFormTitle">Add New Car</span>
+            <button class="btn-admin btn-admin-secondary btn-admin-sm" onclick="resetCarForm()">Clear Form</button>
+          </div>
+          <div class="admin-card-body">
+            <input type="hidden" id="editCarId">
+
+            <!-- Images first -->
+            <h3 style="font-size:15px;color:#94a3b8;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #334155">📸 Car Images</h3>
+            <div class="image-drop-zone" id="imageDropZone" onclick="document.getElementById('imageFileInput').click()">
+              <input type="file" id="imageFileInput" accept="image/*" multiple onchange="handleImageFiles(this.files)">
+              <div class="image-drop-icon">📷</div>
+              <div class="image-drop-text">Drag &amp; drop images here, or <span>click to upload</span></div>
+              <div style="font-size:12px;color:#475569;margin-top:6px">JPG, PNG, WEBP · Max 5MB each · Multiple allowed</div>
+            </div>
+            <div id="uploadProgressWrap" style="display:none;margin-top:10px">
+              <div style="font-size:12px;color:#94a3b8;margin-bottom:4px" id="uploadProgressLabel">Uploading…</div>
+              <div class="upload-progress"><div class="upload-progress-bar" id="uploadProgressBar"></div></div>
+            </div>
+            <div class="image-preview-grid" id="imagePreviewGrid"></div>
+            <input type="hidden" id="carImages" value="[]">
+            <input type="hidden" id="carThumbnail" value="">
+
+            <h3 style="font-size:15px;color:#94a3b8;margin:24px 0 14px;padding-bottom:8px;border-bottom:1px solid #334155">🚗 Vehicle Information</h3>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Car Title *</label><input class="admin-input" id="carTitle" placeholder="e.g. 2020 Maruti Suzuki Swift VXI Manual"></div>
+              <div class="admin-form-group"><label class="admin-label">Brand *</label><input class="admin-input" id="carBrand" list="brandSuggestions" placeholder="Maruti Suzuki">
+                <datalist id="brandSuggestions">
+                  ${['Maruti Suzuki','Hyundai','Tata','Honda','Toyota','Ford','Volkswagen','Kia','Renault','Mahindra','Nissan','Skoda','MG','Jeep','BMW','Mercedes','Audi'].map(b=>`<option value="${b}">`).join('')}
+                </datalist>
+              </div>
+            </div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Model *</label><input class="admin-input" id="carModel" placeholder="Swift, Creta, Nexon…"></div>
+              <div class="admin-form-group"><label class="admin-label">Variant</label><input class="admin-input" id="carVariant" placeholder="VXI, SX, ZXI+…"></div>
+            </div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Year *</label><input class="admin-input" type="number" id="carYear" min="2000" max="2025" placeholder="2020"></div>
+              <div class="admin-form-group"><label class="admin-label">Colour</label><input class="admin-input" id="carColor" placeholder="Pearl White"></div>
+            </div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Fuel Type *</label>
+                <select class="admin-select" id="carFuel">
+                  <option value="">Select Fuel</option>
+                  ${['Petrol','Diesel','CNG','Electric','Hybrid','LPG'].map(f=>`<option value="${f}">${f}</option>`).join('')}
+                </select>
+              </div>
+              <div class="admin-form-group"><label class="admin-label">Transmission</label>
+                <select class="admin-select" id="carTrans">
+                  <option value="">Select</option>
+                  ${['Manual','Automatic','AMT','CVT','DCT'].map(t=>`<option value="${t}">${t}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">KM Driven</label><input class="admin-input" type="number" id="carKm" placeholder="45000"></div>
+              <div class="admin-form-group"><label class="admin-label">Owner</label>
+                <select class="admin-select" id="carOwner">
+                  ${['1st Owner','2nd Owner','3rd Owner','4th+ Owner','Company Car'].map(o=>`<option value="${o}">${o}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Engine (CC)</label><input class="admin-input" id="carEngine" placeholder="1500"></div>
+              <div class="admin-form-group"><label class="admin-label">Max Power (BHP)</label><input class="admin-input" id="carPower" placeholder="118 bhp"></div>
+            </div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Mileage (kmpl)</label><input class="admin-input" id="carMileage" placeholder="18.5"></div>
+              <div class="admin-form-group"><label class="admin-label">Body Type</label>
+                <select class="admin-select" id="carBodyType">
+                  <option value="">Select</option>
+                  ${['Hatchback','Sedan','SUV','MUV','Crossover','Coupe','Convertible','Pickup'].map(b=>`<option value="${b}">${b}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Registration No.</label><input class="admin-input" id="carRegNo" placeholder="MH 01 AB 1234"></div>
+              <div class="admin-form-group"><label class="admin-label">Insurance Until</label><input class="admin-input" type="date" id="carInsurance"></div>
+            </div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Location / City *</label><input class="admin-input" id="carLocation" placeholder="Mumbai"></div>
+              <div class="admin-form-group"><label class="admin-label">Condition</label>
+                <select class="admin-select" id="carCondition">
+                  <option value="excellent">Excellent</option>
+                  <option value="good" selected>Good</option>
+                  <option value="fair">Fair</option>
+                </select>
+              </div>
+            </div>
+            <div class="admin-form-group"><label class="admin-label">Description</label><textarea class="admin-textarea" id="carDesc" placeholder="Describe the car's condition, features, service history, reason for selling…"></textarea></div>
+
+            <h3 style="font-size:15px;color:#94a3b8;margin:24px 0 14px;padding-bottom:8px;border-bottom:1px solid #334155">💰 Pricing</h3>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Selling Price (₹ Lakhs) *</label><input class="admin-input" type="number" id="carPrice" step="0.01" placeholder="5.50"></div>
+              <div class="admin-form-group"><label class="admin-label">EMI Starts (₹/month)</label><input class="admin-input" type="number" id="carEmi" placeholder="12500"></div>
+            </div>
+
+            <h3 style="font-size:15px;color:#94a3b8;margin:24px 0 14px;padding-bottom:8px;border-bottom:1px solid #334155">👤 Seller Details</h3>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Seller Name</label><input class="admin-input" id="sellerName" placeholder="John Doe"></div>
+              <div class="admin-form-group"><label class="admin-label">Seller Phone</label><input class="admin-input" type="tel" id="sellerPhone" placeholder="+91 9876543210"></div>
+            </div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Seller Email</label><input class="admin-input" type="email" id="sellerEmail" placeholder="seller@email.com"></div>
+              <div class="admin-form-group"><label class="admin-label">WhatsApp Number</label><input class="admin-input" id="sellerWa" placeholder="919876543210"></div>
+            </div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Seller Type</label>
+                <select class="admin-select" id="sellerType">
+                  <option value="Individual">Individual</option>
+                  <option value="Dealer">Dealer</option>
+                  <option value="Certified Dealer">Certified Dealer</option>
+                </select>
+              </div>
+            </div>
+
+            <h3 style="font-size:15px;color:#94a3b8;margin:24px 0 14px;padding-bottom:8px;border-bottom:1px solid #334155">⚙️ Listing Options</h3>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Status</label>
+                <select class="admin-select" id="carStatus">
+                  <option value="available">Available</option>
+                  <option value="sold">Sold</option>
+                  <option value="reserved">Reserved</option>
+                  <option value="pending">Pending Review</option>
+                </select>
+              </div>
+              <div class="admin-form-group"><label class="admin-label">Featured Listing</label>
+                <select class="admin-select" id="carFeatured">
+                  <option value="false">No</option>
+                  <option value="true">Yes — Show on Homepage</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap">
+              <button class="btn-admin btn-admin-primary" id="saveCarBtn" onclick="saveCar()" style="padding:13px 32px;font-size:15px">💾 Save Listing</button>
+              <button class="btn-admin btn-admin-secondary" onclick="resetCarForm()">Clear</button>
+              <div id="saveCarMsg" style="align-self:center;font-size:13px;font-weight:600;display:none"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── COLLECTIONS ───────────────────────── -->
+      <div data-section="collections">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+          <h2 style="font-size:20px;font-weight:700;color:#f1f5f9">Collections / Categories</h2>
+          <button class="btn-admin btn-admin-primary" onclick="showCreateCollectionModal()">+ New Collection</button>
+        </div>
+        <div class="collection-grid" id="collectionsGrid">
+          <div style="color:#475569;padding:40px;text-align:center">Loading…</div>
+        </div>
+      </div>
+
+      <!-- ─── ENQUIRIES ──────────────────────────── -->
+      <div data-section="enquiries">
+        <div class="admin-card">
+          <div class="admin-card-header"><span class="admin-card-title">Customer Enquiries</span></div>
+          <div style="overflow-x:auto">
+            <table class="admin-table">
+              <thead><tr><th>Date</th><th>Name</th><th>Phone</th><th>Type</th><th>Details</th><th>Actions</th></tr></thead>
+              <tbody id="enquiriesTable"><tr><td colspan="6" style="text-align:center;padding:40px;color:#475569">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── SETTINGS ──────────────────────────── -->
+      <div data-section="settings">
+        <div class="admin-card">
+          <div class="admin-card-header"><span class="admin-card-title">Site Settings</span></div>
+          <div class="admin-card-body">
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Site Name</label><input class="admin-input" id="set-name" value="AutoMart"></div>
+              <div class="admin-form-group"><label class="admin-label">Tagline</label><input class="admin-input" id="set-tagline" value="Find Your Perfect Second-Hand Car"></div>
+            </div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Phone Number</label><input class="admin-input" id="set-phone" value="+91 1800-123-4567"></div>
+              <div class="admin-form-group"><label class="admin-label">Email Address</label><input class="admin-input" id="set-email" value="support@automart.in"></div>
+            </div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">WhatsApp Number</label><input class="admin-input" id="set-wa" placeholder="919876543210"></div>
+              <div class="admin-form-group"><label class="admin-label">Business Address</label><input class="admin-input" id="set-address" placeholder="Mumbai, India"></div>
+            </div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label">Stats: Total Cars</label><input class="admin-input" id="set-stat-cars" value="50,000+"></div>
+              <div class="admin-form-group"><label class="admin-label">Stats: Cities</label><input class="admin-input" id="set-stat-cities" value="200+"></div>
+            </div>
+            <button class="btn-admin btn-admin-primary" onclick="saveSettings()" style="margin-top:8px">Save Settings</button>
+          </div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-header"><span class="admin-card-title">Account</span></div>
+          <div class="admin-card-body">
+            <p style="color:#64748b;font-size:14px;margin-bottom:16px">Signed in as: <strong id="accountEmail" style="color:#f1f5f9"></strong></p>
+            <button class="btn-admin btn-admin-danger" onclick="doLogout()">Sign Out</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /admin-content -->
+  </div><!-- /admin-main -->
+
+</div><!-- /adminApp -->
+
+<!-- ── CREATE COLLECTION MODAL ───────────────────────── -->
+<div id="collectionModal" class="admin-modal-overlay" style="display:none">
+  <div class="admin-modal">
+    <div class="admin-modal-header">
+      <span class="admin-modal-title" id="collectionModalTitle">New Collection</span>
+      <button class="admin-modal-close" onclick="closeCollectionModal()">×</button>
+    </div>
+    <div class="admin-modal-body">
+      <input type="hidden" id="collectionEditId">
+      <div class="admin-form-group"><label class="admin-label">Collection Name *</label><input class="admin-input" id="collectionName" placeholder="e.g. SUVs, Budget Cars, Premium Collection"></div>
+      <div class="admin-form-group"><label class="admin-label">Description</label><textarea class="admin-textarea" id="collectionDesc" placeholder="Brief description of this collection" style="min-height:80px"></textarea></div>
+      <div class="admin-form-group"><label class="admin-label">Cover Image URL (optional)</label><input class="admin-input" id="collectionCover" placeholder="https://…"></div>
+    </div>
+    <div class="admin-modal-footer">
+      <button class="btn-admin btn-admin-secondary" onclick="closeCollectionModal()">Cancel</button>
+      <button class="btn-admin btn-admin-primary" onclick="saveCollection()">Save Collection</button>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile sidebar toggle -->
+<button class="admin-sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">☰</button>
+<div id="sidebarOverlay" onclick="toggleSidebar()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99"></div>
+
+<!-- Toast -->
+<div class="admin-toast" id="adminToast"></div>
+
+<script type="module">
+import {
+  db, storage, auth,
+  collection, doc, getDocs, getDoc, addDoc, updateDoc, deleteDoc,
+  query, where, orderBy, limit, serverTimestamp, onSnapshot,
+  ref, uploadBytesResumable, getDownloadURL, deleteObject,
+  signInWithEmailAndPassword, signOut, onAuthStateChanged,
+  setPersistence, browserLocalPersistence
+} from '../assets/js/firebase-config.js';
+
+/* ─── AUTH ─────────────────────────────────────────── */
+// Persist session
+setPersistence(auth, browserLocalPersistence).catch(console.error);
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminApp').style.display = 'flex';
+    document.getElementById('adminEmailDisplay').textContent = user.email;
+    document.getElementById('accountEmail').textContent = user.email;
+    document.getElementById('adminAvatarBtn').textContent = user.email[0].toUpperCase();
+    loadDashboard();
+    loadListings();
+    loadCollections();
+    loadEnquiries();
+    loadSettings();
+  } else {
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('adminApp').style.display = 'none';
+  }
+});
+
+window.doLogin = async function() {
+  const email = document.getElementById('adminEmail').value.trim();
+  const pass  = document.getElementById('adminPassword').value;
+  const btn   = document.getElementById('loginBtn');
+  const err   = document.getElementById('loginError');
+  err.style.display = 'none';
+  btn.textContent = 'Signing in…'; btn.disabled = true;
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch(e) {
+    err.style.display = 'block';
+    err.textContent = e.code === 'auth/invalid-credential' ? '❌ Invalid email or password' : '❌ ' + e.message;
+  }
+  btn.textContent = 'Sign In'; btn.disabled = false;
+};
+
+window.doLogout = async function() {
+  await signOut(auth);
+};
+
+// Enter key on password
+document.getElementById('adminPassword')?.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+/* ─── NAVIGATION ────────────────────────────────────── */
+window.showSection = function(name, btn) {
+  document.querySelectorAll('[data-section]').forEach(el => el.classList.remove('active'));
+  document.querySelector(`[data-section="${name}"]`)?.classList.add('active');
+  document.querySelectorAll('.admin-nav-item').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const titles = { dashboard:'Dashboard', listings:'Car Listings', 'add-car':'Add New Car', collections:'Collections', enquiries:'Enquiries', settings:'Settings' };
+  document.getElementById('sectionTitle').textContent = titles[name] || name;
+  if (window.innerWidth <= 900) closeSidebar();
+};
+
+window.toggleSidebar = function() {
+  const sb = document.getElementById('adminSidebar');
+  const ov = document.getElementById('sidebarOverlay');
+  const open = sb.classList.toggle('mobile-open');
+  ov.style.display = open ? 'block' : 'none';
+};
+function closeSidebar() {
+  document.getElementById('adminSidebar').classList.remove('mobile-open');
+  document.getElementById('sidebarOverlay').style.display = 'none';
+}
+
+/* ─── TOAST ─────────────────────────────────────────── */
+window.adminToast = function(msg, type='success') {
+  const t = document.getElementById('adminToast');
+  t.className = `admin-toast ${type}`;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+};
+
+/* ─── DASHBOARD ─────────────────────────────────────── */
+async function loadDashboard() {
+  try {
+    const allSnap  = await getDocs(collection(db,'cars'));
+    const allCars  = allSnap.docs.map(d=>({id:d.id,...d.data()}));
+    const avail    = allCars.filter(c=>c.status==='available').length;
+    const sold     = allCars.filter(c=>c.status==='sold').length;
+    const featured = allCars.filter(c=>c.featured===true||c.featured==='true').length;
+    const colSnap  = await getDocs(collection(db,'collections'));
+    const enqSnap  = await getDocs(collection(db,'enquiries'));
+
+    document.getElementById('ds-total').textContent      = allCars.length;
+    document.getElementById('ds-available').textContent  = avail;
+    document.getElementById('ds-sold').textContent       = sold;
+    document.getElementById('ds-featured').textContent   = featured;
+    document.getElementById('ds-collections').textContent= colSnap.size;
+    document.getElementById('ds-enquiries').textContent  = enqSnap.size;
+    document.getElementById('listingCount').textContent  = allCars.length;
+
+    if (enqSnap.size > 0) {
+      const badge = document.getElementById('enquiryCount');
+      badge.style.display = 'inline';
+      badge.textContent = enqSnap.size;
+    }
+
+    // Recent 5
+    const recent = allCars.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0)).slice(0,5);
+    renderRecentTable(recent);
+  } catch(e) {
+    console.error('Dashboard load error:', e);
+  }
+}
+
+function renderRecentTable(cars) {
+  const tbody = document.getElementById('recentListingsTable');
+  if (!cars.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:#475569">No listings yet. Add your first car!</td></tr>'; return; }
+  tbody.innerHTML = cars.map(c => `
+    <tr>
+      <td><div class="car-title-cell">${c.title||`${c.year||''} ${c.brand||''} ${c.model||''}`}<small>${c.location||''}</small></div></td>
+      <td style="font-weight:700;color:#f1f5f9">₹${c.price||'—'} L</td>
+      <td><span class="status-badge status-${c.status||'available'}">${c.status||'available'}</span></td>
+      <td style="color:#64748b;font-size:12px">${c.createdAt ? new Date(c.createdAt.seconds*1000).toLocaleDateString('en-IN') : '—'}</td>
+      <td><button class="btn-admin btn-admin-secondary btn-admin-sm" onclick="editCar('${c.id}')">Edit</button></td>
+    </tr>`).join('');
+}
+
+/* ─── LISTINGS ──────────────────────────────────────── */
+let allCarsCache = [];
+
+async function loadListings() {
+  const tbody = document.getElementById('listingsTable');
+  tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:#475569">Loading…</td></tr>';
+  try {
+    const snap = await getDocs(query(collection(db,'cars'), orderBy('createdAt','desc')));
+    allCarsCache = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+    renderListingsTable(allCarsCache);
+  } catch(e) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:#ef4444">Error loading listings. Check Firebase config.</td></tr>';
+  }
+}
+
+window.filterListings = function(search) {
+  const s = (search !== undefined ? search : document.getElementById('listingSearch').value).toLowerCase();
+  const status = document.getElementById('listingStatusFilter').value;
+  let filtered = allCarsCache;
+  if (s) filtered = filtered.filter(c => `${c.title} ${c.brand} ${c.model} ${c.location}`.toLowerCase().includes(s));
+  if (status) filtered = filtered.filter(c => c.status === status);
+  renderListingsTable(filtered);
+};
+
+function renderListingsTable(cars) {
+  const tbody = document.getElementById('listingsTable');
+  if (!cars.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:#475569">No listings found.</td></tr>'; return; }
+  tbody.innerHTML = cars.map(c => `
+    <tr>
+      <td><div class="car-thumb-cell"><img src="${c.thumbnail||c.images?.[0]||'../assets/images/car-placeholder.svg'}" alt="" onerror="this.src='../assets/images/car-placeholder.svg'"></div></td>
+      <td><div class="car-title-cell">${c.title||`${c.year||''} ${c.brand||''} ${c.model||''}`}<small>📍 ${c.location||'—'}</small></div></td>
+      <td style="font-weight:700;color:#f1f5f9;white-space:nowrap">₹${c.price||'—'} L</td>
+      <td>${c.year||'—'}</td>
+      <td>${c.km ? parseInt(c.km).toLocaleString('en-IN')+' km' : '—'}</td>
+      <td><span class="status-badge status-${c.status||'available'}">${c.status||'available'}</span></td>
+      <td>${(c.featured===true||c.featured==='true') ? '<span style="color:#eab308;font-weight:700">⭐ Yes</span>' : '<span style="color:#475569">—</span>'}</td>
+      <td>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn-admin btn-admin-secondary btn-admin-sm" onclick="editCar('${c.id}')">✏️ Edit</button>
+          <button class="btn-admin btn-admin-sm ${c.status==='sold'?'btn-admin-success':'btn-admin-danger'}" onclick="toggleSold('${c.id}','${c.status}')">${c.status==='sold'?'✓ Sold':'Mark Sold'}</button>
+          <button class="btn-admin btn-admin-sm" style="background:rgba(139,92,246,.15);color:#8b5cf6;border:1px solid rgba(139,92,246,.25)" onclick="toggleFeatured('${c.id}',${c.featured===true||c.featured==='true'})">${(c.featured===true||c.featured==='true')?'Unfeature':'⭐ Feature'}</button>
+          <button class="btn-admin btn-admin-danger btn-admin-sm" onclick="deleteCar('${c.id}')">🗑 Del</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+/* ─── SAVE CAR ──────────────────────────────────────── */
+window.saveCar = async function() {
+  const btn = document.getElementById('saveCarBtn');
+  const msg = document.getElementById('saveCarMsg');
+
+  // Validate required
+  const title = document.getElementById('carTitle').value.trim();
+  const brand = document.getElementById('carBrand').value.trim();
+  const price = document.getElementById('carPrice').value.trim();
+  const year  = document.getElementById('carYear').value.trim();
+  const loc   = document.getElementById('carLocation').value.trim();
+
+  if (!title || !brand || !price || !year || !loc) {
+    adminToast('Please fill all required fields (Title, Brand, Price, Year, Location)', 'error'); return;
+  }
+
+  btn.textContent = 'Saving…'; btn.disabled = true;
+  msg.style.display = 'none';
+
+  let images = [];
+  try { images = JSON.parse(document.getElementById('carImages').value || '[]'); } catch(e){}
+  const thumbnail = document.getElementById('carThumbnail').value || images[0] || '';
+
+  const data = {
+    title, brand, model: document.getElementById('carModel').value.trim(),
+    variant: document.getElementById('carVariant').value.trim(),
+    year: parseInt(year), color: document.getElementById('carColor').value.trim(),
+    fuelType: document.getElementById('carFuel').value, transmission: document.getElementById('carTrans').value,
+    km: parseInt(document.getElementById('carKm').value)||0, owner: document.getElementById('carOwner').value,
+    engine: document.getElementById('carEngine').value.trim(), power: document.getElementById('carPower').value.trim(),
+    mileage: document.getElementById('carMileage').value.trim(), bodyType: document.getElementById('carBodyType').value,
+    regNumber: document.getElementById('carRegNo').value.trim(), insurance: document.getElementById('carInsurance').value,
+    location: loc, condition: document.getElementById('carCondition').value,
+    description: document.getElementById('carDesc').value.trim(),
+    price, emi: document.getElementById('carEmi').value.trim(),
+    sellerName: document.getElementById('sellerName').value.trim(), sellerPhone: document.getElementById('sellerPhone').value.trim(),
+    sellerEmail: document.getElementById('sellerEmail').value.trim(), sellerWhatsapp: document.getElementById('sellerWa').value.trim(),
+    sellerType: document.getElementById('sellerType').value,
+    status: document.getElementById('carStatus').value,
+    featured: document.getElementById('carFeatured').value === 'true',
+    images, thumbnail, updatedAt: serverTimestamp(),
+  };
+
+  try {
+    const editId = document.getElementById('editCarId').value;
+    if (editId) {
+      await updateDoc(doc(db,'cars',editId), data);
+      adminToast('✅ Car updated successfully!');
+    } else {
+      data.createdAt = serverTimestamp();
+      await addDoc(collection(db,'cars'), data);
+      adminToast('✅ Car listing created!');
+    }
+    resetCarForm();
+    loadListings();
+    loadDashboard();
+    showSection('listings', document.querySelector('[onclick*=listings]'));
+  } catch(e) {
+    adminToast('❌ Error saving: ' + e.message, 'error');
+  }
+  btn.textContent = '💾 Save Listing'; btn.disabled = false;
+};
+
+window.resetCarForm = function() {
+  document.getElementById('editCarId').value = '';
+  document.getElementById('carFormTitle').textContent = 'Add New Car';
+  ['carTitle','carBrand','carModel','carVariant','carYear','carColor','carKm','carEngine','carPower','carMileage','carRegNo','carInsurance','carLocation','carDesc','carPrice','carEmi','sellerName','sellerPhone','sellerEmail','sellerWa'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+  ['carFuel','carTrans','carOwner','carBodyType','carCondition','carStatus','carFeatured','sellerType'].forEach(id => { const el = document.getElementById(id); if(el) el.selectedIndex=0; });
+  document.getElementById('carImages').value = '[]';
+  document.getElementById('carThumbnail').value = '';
+  document.getElementById('imagePreviewGrid').innerHTML = '';
+};
+
+window.editCar = async function(id) {
+  showSection('add-car', document.querySelector('[onclick*=add-car]'));
+  try {
+    const snap = await getDoc(doc(db,'cars',id));
+    if (!snap.exists()) return adminToast('Car not found','error');
+    const c = snap.data();
+    document.getElementById('editCarId').value = id;
+    document.getElementById('carFormTitle').textContent = 'Edit Car';
+
+    const set = (id, val) => { const el = document.getElementById(id); if(el) el.value = val||''; };
+    set('carTitle', c.title); set('carBrand', c.brand); set('carModel', c.model); set('carVariant', c.variant);
+    set('carYear', c.year); set('carColor', c.color); set('carKm', c.km); set('carEngine', c.engine);
+    set('carPower', c.power); set('carMileage', c.mileage); set('carRegNo', c.regNumber);
+    set('carInsurance', c.insurance); set('carLocation', c.location); set('carDesc', c.description);
+    set('carPrice', c.price); set('carEmi', c.emi); set('sellerName', c.sellerName);
+    set('sellerPhone', c.sellerPhone); set('sellerEmail', c.sellerEmail); set('sellerWa', c.sellerWhatsapp);
+
+    ['carFuel','carTrans','carOwner','carBodyType','carCondition','carStatus','sellerType'].forEach(sid => {
+      const map = { carFuel:'fuelType', carTrans:'transmission', carOwner:'owner', carBodyType:'bodyType', carCondition:'condition', carStatus:'status', sellerType:'sellerType' };
+      const el = document.getElementById(sid);
+      if (el && c[map[sid]]) el.value = c[map[sid]];
+    });
+
+    document.getElementById('carFeatured').value = (c.featured===true||c.featured==='true') ? 'true' : 'false';
+    document.getElementById('carImages').value = JSON.stringify(c.images||[]);
+    document.getElementById('carThumbnail').value = c.thumbnail||'';
+    renderImagePreviews(c.images||[], c.thumbnail||'');
+    window.scrollTo({top:0,behavior:'smooth'});
+  } catch(e) { adminToast('Error loading car: '+e.message,'error'); }
+};
+
+window.deleteCar = async function(id) {
+  if (!confirm('Delete this listing permanently?')) return;
+  try {
+    await deleteDoc(doc(db,'cars',id));
+    adminToast('🗑 Listing deleted');
+    loadListings(); loadDashboard();
+  } catch(e) { adminToast('Error: '+e.message,'error'); }
+};
+
+window.toggleSold = async function(id, status) {
+  const newStatus = status === 'sold' ? 'available' : 'sold';
+  try {
+    await updateDoc(doc(db,'cars',id), { status: newStatus, updatedAt: serverTimestamp() });
+    adminToast(`Car marked as ${newStatus}`);
+    loadListings(); loadDashboard();
+  } catch(e) { adminToast('Error: '+e.message,'error'); }
+};
+
+window.toggleFeatured = async function(id, isFeatured) {
+  try {
+    await updateDoc(doc(db,'cars',id), { featured: !isFeatured, updatedAt: serverTimestamp() });
+    adminToast(isFeatured ? 'Removed from featured' : '⭐ Marked as featured');
+    loadListings(); loadDashboard();
+  } catch(e) { adminToast('Error: '+e.message,'error'); }
+};
+
+/* ─── IMAGE UPLOAD ──────────────────────────────────── */
+const dropZone = document.getElementById('imageDropZone');
+dropZone?.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone?.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone?.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); handleImageFiles(e.dataTransfer.files); });
+
+window.handleImageFiles = async function(files) {
+  if (!files?.length) return;
+  const progress = document.getElementById('uploadProgressWrap');
+  const bar = document.getElementById('uploadProgressBar');
+  const label = document.getElementById('uploadProgressLabel');
+  progress.style.display = 'block';
+
+  let images = [];
+  try { images = JSON.parse(document.getElementById('carImages').value || '[]'); } catch(e){}
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    if (file.size > 5 * 1024 * 1024) { adminToast(`${file.name} is too large (max 5MB)`, 'error'); continue; }
+    label.textContent = `Uploading ${i+1} of ${files.length}: ${file.name}`;
+    try {
+      const url = await uploadImage(file, p => { bar.style.width = p + '%'; });
+      images.push(url);
+    } catch(e) { adminToast('Upload failed: ' + e.message, 'error'); }
+  }
+
+  document.getElementById('carImages').value = JSON.stringify(images);
+  if (!document.getElementById('carThumbnail').value && images.length) {
+    document.getElementById('carThumbnail').value = images[0];
+  }
+  renderImagePreviews(images, document.getElementById('carThumbnail').value);
+  progress.style.display = 'none';
+};
+
+async function uploadImage(file, onProgress) {
+  const ext = file.name.split('.').pop().toLowerCase();
+  const path = `cars/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+  const storageRef = ref(storage, path);
+  return new Promise((resolve, reject) => {
+    const task = uploadBytesResumable(storageRef, file);
+    task.on('state_changed',
+      snap => onProgress(Math.round(snap.bytesTransferred/snap.totalBytes*100)),
+      reject,
+      async () => resolve(await getDownloadURL(task.snapshot.ref))
+    );
+  });
+}
+
+function renderImagePreviews(images, featured) {
+  const grid = document.getElementById('imagePreviewGrid');
+  grid.innerHTML = images.map((src, i) => `
+    <div class="image-preview-item ${src===featured?'is-featured':''}" data-src="${src}" data-idx="${i}">
+      <img src="${src}" alt="Preview ${i+1}" loading="lazy">
+      <div class="img-actions">
+        <button class="img-action-btn img-feature-btn" onclick="setFeatured('${src}')" title="Set as thumbnail">★</button>
+        <button class="img-action-btn img-delete-btn" onclick="removeImage(${i})" title="Remove">✕</button>
+      </div>
+      <span class="featured-badge">Thumbnail</span>
+    </div>`).join('');
+}
+
+window.setFeatured = function(src) {
+  document.getElementById('carThumbnail').value = src;
+  let images = [];
+  try { images = JSON.parse(document.getElementById('carImages').value || '[]'); } catch(e){}
+  renderImagePreviews(images, src);
+  adminToast('✓ Set as main thumbnail', 'info');
+};
+
+window.removeImage = function(idx) {
+  let images = [];
+  try { images = JSON.parse(document.getElementById('carImages').value || '[]'); } catch(e){}
+  images.splice(idx, 1);
+  document.getElementById('carImages').value = JSON.stringify(images);
+  const thumb = document.getElementById('carThumbnail').value;
+  if (!images.includes(thumb)) document.getElementById('carThumbnail').value = images[0] || '';
+  renderImagePreviews(images, document.getElementById('carThumbnail').value);
+};
+
+/* ─── COLLECTIONS ───────────────────────────────────── */
+async function loadCollections() {
+  const grid = document.getElementById('collectionsGrid');
+  try {
+    const snap = await getDocs(collection(db,'collections'));
+    document.getElementById('ds-collections').textContent = snap.size;
+    if (!snap.size) { grid.innerHTML = '<div style="color:#475569;padding:40px;text-align:center;grid-column:1/-1">No collections yet. Create your first one!</div>'; return; }
+    grid.innerHTML = snap.docs.map(d => {
+      const c = d.data();
+      return `<div class="collection-card">
+        <div class="collection-card-title">${c.name}</div>
+        <div class="collection-card-count">${c.description||'No description'}</div>
+        <div class="collection-card-actions">
+          <button class="btn-admin btn-admin-secondary btn-admin-sm" onclick="editCollection('${d.id}')">Edit</button>
+          <button class="btn-admin btn-admin-danger btn-admin-sm" onclick="deleteCollection('${d.id}')">Delete</button>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) { grid.innerHTML = '<div style="color:#ef4444;padding:40px;text-align:center;grid-column:1/-1">Error loading collections</div>'; }
+}
+
+window.showCreateCollectionModal = function() {
+  document.getElementById('collectionEditId').value = '';
+  document.getElementById('collectionModalTitle').textContent = 'New Collection';
+  document.getElementById('collectionName').value = '';
+  document.getElementById('collectionDesc').value = '';
+  document.getElementById('collectionCover').value = '';
+  document.getElementById('collectionModal').style.display = 'flex';
+};
+
+window.closeCollectionModal = function() {
+  document.getElementById('collectionModal').style.display = 'none';
+};
+
+window.editCollection = async function(id) {
+  const snap = await getDoc(doc(db,'collections',id));
+  if (!snap.exists()) return;
+  const c = snap.data();
+  document.getElementById('collectionEditId').value = id;
+  document.getElementById('collectionModalTitle').textContent = 'Edit Collection';
+  document.getElementById('collectionName').value = c.name||'';
+  document.getElementById('collectionDesc').value = c.description||'';
+  document.getElementById('collectionCover').value = c.cover||'';
+  document.getElementById('collectionModal').style.display = 'flex';
+};
+
+window.saveCollection = async function() {
+  const name = document.getElementById('collectionName').value.trim();
+  if (!name) { adminToast('Collection name required','error'); return; }
+  const data = { name, description: document.getElementById('collectionDesc').value.trim(), cover: document.getElementById('collectionCover').value.trim(), updatedAt: serverTimestamp() };
+  try {
+    const editId = document.getElementById('collectionEditId').value;
+    if (editId) { await updateDoc(doc(db,'collections',editId), data); adminToast('Collection updated'); }
+    else { data.createdAt = serverTimestamp(); await addDoc(collection(db,'collections'), data); adminToast('Collection created'); }
+    closeCollectionModal(); loadCollections();
+  } catch(e) { adminToast('Error: '+e.message,'error'); }
+};
+
+window.deleteCollection = async function(id) {
+  if (!confirm('Delete this collection?')) return;
+  await deleteDoc(doc(db,'collections',id));
+  adminToast('Collection deleted'); loadCollections();
+};
+
+/* ─── ENQUIRIES ─────────────────────────────────────── */
+async function loadEnquiries() {
+  const tbody = document.getElementById('enquiriesTable');
+  try {
+    const snap = await getDocs(query(collection(db,'enquiries'), orderBy('createdAt','desc')));
+    if (!snap.size) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:#475569">No enquiries yet</td></tr>'; return; }
+    tbody.innerHTML = snap.docs.map(d => {
+      const e = d.data();
+      const date = e.createdAt ? new Date(e.createdAt.seconds*1000).toLocaleDateString('en-IN') : '—';
+      return `<tr>
+        <td style="color:#64748b;font-size:12px">${date}</td>
+        <td style="font-weight:600;color:#f1f5f9">${e.name||'—'}</td>
+        <td><a href="tel:${e.phone}" style="color:#3b82f6">${e.phone||'—'}</a></td>
+        <td><span class="status-badge status-available">${e.type||'enquiry'}</span></td>
+        <td style="font-size:12px;color:#94a3b8;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.brand||''} ${e.model||''} ${e.message||''}</td>
+        <td><button class="btn-admin btn-admin-danger btn-admin-sm" onclick="deleteEnquiry('${d.id}')">Delete</button></td>
+      </tr>`;
+    }).join('');
+  } catch(e) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:#ef4444">Error loading enquiries</td></tr>'; }
+}
+
+window.deleteEnquiry = async function(id) {
+  if (!confirm('Delete enquiry?')) return;
+  await deleteDoc(doc(db,'enquiries',id));
+  adminToast('Enquiry deleted'); loadEnquiries();
+};
+
+/* ─── SETTINGS ──────────────────────────────────────── */
+async function loadSettings() {
+  try {
+    const snap = await getDoc(doc(db,'settings','site'));
+    if (snap.exists()) {
+      const s = snap.data();
+      ['name','tagline','phone','email','wa','address','stat-cars','stat-cities'].forEach(k => {
+        const el = document.getElementById('set-'+k);
+        if (el && s[k]) el.value = s[k];
+      });
+    }
+  } catch(e) {}
+}
+
+window.saveSettings = async function() {
+  const data = {};
+  ['name','tagline','phone','email','wa','address','stat-cars','stat-cities'].forEach(k => {
+    const el = document.getElementById('set-'+k);
+    if (el) data[k] = el.value.trim();
+  });
+  try {
+    await updateDoc(doc(db,'settings','site'), { ...data, updatedAt: serverTimestamp() }).catch(async () => {
+      await addDoc(collection(db,'settings'), { ...data, id:'site' });
+    });
+    adminToast('Settings saved!');
+  } catch(e) { adminToast('Error: '+e.message,'error'); }
+};
+</script>
+</body>
+</html>

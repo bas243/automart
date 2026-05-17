@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">Car Detail — AutoMart</title>
+  <meta name="description" id="pageMeta" content="View car details, specs, and contact the seller.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/gallery.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<div class="page-header">
+  <div class="container">
+    <h1 id="carTitle" style="font-size:clamp(20px,3vw,32px)">Loading…</h1>
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a><span class="sep">›</span>
+      <a href="cars.html">Used Cars</a><span class="sep">›</span>
+      <span class="current" id="breadCrumbTitle">—</span>
+    </div>
+  </div>
+</div>
+
+<div style="background:var(--color-light);padding:40px 0 60px">
+  <div class="container">
+
+    <!-- GALLERY -->
+    <div id="gallerySection" style="margin-bottom:32px">
+      <div class="car-gallery">
+        <div class="main-image" id="mainImageWrap" style="position:relative;height:420px;border-radius:16px;overflow:hidden;background:var(--color-light-2);cursor:zoom-in" onclick="openLightbox(0)">
+          <img id="mainCarImage" src="../assets/images/car-placeholder.svg" alt="Car" style="width:100%;height:100%;object-fit:cover">
+          <button onclick="event.stopPropagation();openLightbox(0)" style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,.6);color:white;border:none;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:12px;font-weight:700;backdrop-filter:blur(4px)">⛶ Fullscreen</button>
+        </div>
+        <div class="thumb-grid" id="thumbGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
+      </div>
+    </div>
+
+    <!-- DETAIL GRID -->
+    <div class="car-detail-grid">
+      <!-- LEFT -->
+      <div id="carDetailMain">
+        <div class="car-detail-meta" id="carMeta"></div>
+        <div class="car-spec-full" id="carSpecs"></div>
+        <div id="carDescription" style="background:white;border:1px solid var(--color-border);border-radius:12px;padding:24px;margin-bottom:24px;display:none">
+          <h3 style="font-size:18px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--color-light)">📝 About This Car</h3>
+          <div id="carDescText" style="font-size:14px;color:var(--color-charcoal);line-height:1.8"></div>
+        </div>
+
+        <!-- Specs table -->
+        <div style="background:white;border:1px solid var(--color-border);border-radius:12px;padding:24px;margin-bottom:24px">
+          <h3 style="font-size:18px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--color-light)">📋 Vehicle Details</h3>
+          <div id="detailsTable" style="display:grid;grid-template-columns:1fr 1fr;gap:14px"></div>
+        </div>
+
+        <!-- EMI Calculator -->
+        <div id="emiSection" style="background:linear-gradient(135deg,var(--color-dark),var(--color-dark-2));border-radius:12px;padding:24px;margin-bottom:24px">
+          <h3 style="color:white;font-size:18px;margin-bottom:16px">💰 EMI Calculator</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+            <div><label style="font-size:12px;color:rgba(255,255,255,.6);display:block;margin-bottom:4px">Car Price (₹)</label>
+              <input type="number" id="emiPrice" oninput="calcEMI()" style="width:100%;padding:10px;border-radius:6px;border:none;font-size:14px"></div>
+            <div><label style="font-size:12px;color:rgba(255,255,255,.6);display:block;margin-bottom:4px">Interest Rate (%)</label>
+              <input type="number" id="emiRate" value="9.5" step="0.5" oninput="calcEMI()" style="width:100%;padding:10px;border-radius:6px;border:none;font-size:14px"></div>
+            <div><label style="font-size:12px;color:rgba(255,255,255,.6);display:block;margin-bottom:4px">Tenure (Months)</label>
+              <input type="number" id="emiTenure" value="60" oninput="calcEMI()" style="width:100%;padding:10px;border-radius:6px;border:none;font-size:14px"></div>
+          </div>
+          <div style="margin-top:16px;padding:14px;background:rgba(255,255,255,.08);border-radius:8px;display:flex;justify-content:space-between;align-items:center">
+            <span style="color:rgba(255,255,255,.7);font-size:14px">Monthly EMI</span>
+            <span id="emiResult" style="font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--color-accent)">—</span>
+          </div>
+          <a href="loan.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;color:var(--color-accent);font-size:13px;font-weight:600">Apply for Car Loan →</a>
+        </div>
+
+        <!-- Share -->
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <span style="font-size:13px;font-weight:600;color:var(--color-gray)">Share:</span>
+          <a id="waShare" href="#" target="_blank" style="padding:8px 14px;background:#25D366;color:white;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none">📱 WhatsApp</a>
+          <a id="fbShare" href="#" target="_blank" style="padding:8px 14px;background:#1877F2;color:white;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none">Facebook</a>
+          <button onclick="navigator.clipboard.writeText(location.href).then(()=>showMsg('🔗 Link copied!'))" style="padding:8px 14px;background:var(--color-light);border:1px solid var(--color-border);border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">🔗 Copy Link</button>
+        </div>
+      </div>
+
+      <!-- RIGHT: Contact Box -->
+      <div>
+        <div class="car-contact-box" id="contactBox">
+          <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--color-light)">
+            <div class="contact-price" id="contactPrice">—</div>
+            <div class="contact-emi" id="contactEmi"></div>
+          </div>
+          <div class="contact-actions" id="contactActions">
+            <div style="background:var(--color-light);border-radius:8px;height:50px" class="skeleton"></div>
+          </div>
+          <div class="seller-info" id="sellerInfo" style="margin-top:16px;display:none">
+            <div id="sellerAvatar" style="width:48px;height:48px;border-radius:50%;background:var(--color-primary);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;flex-shrink:0">?</div>
+            <div><div id="sellerName" class="seller-name"></div><div id="sellerType" class="seller-label"></div></div>
+          </div>
+          <div style="margin-top:16px;padding:14px;background:rgba(39,174,96,.06);border:1px solid rgba(39,174,96,.2);border-radius:8px">
+            <p style="font-size:12px;font-weight:700;color:#27AE60;margin-bottom:6px">🛡️ Safety Tips</p>
+            <ul style="font-size:12px;color:var(--color-gray);line-height:1.7;padding-left:14px;list-style:disc">
+              <li>Always meet in a safe public location</li>
+              <li>Verify all documents before payment</li>
+              <li>Get a mechanic inspection done</li>
+              <li>Never pay before seeing the car</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Similar Cars -->
+    <div style="margin-top:48px">
+      <div class="section-header" style="margin-bottom:24px">
+        <h2 class="section-title">Similar Cars You May Like</h2>
+        <a href="cars.html" class="view-all-link">View All</a>
+      </div>
+      <div class="cars-row" id="similarCars">
+        ${Array(4).fill('<div class="car-card" style="flex:0 0 260px"><div class="car-card-image skeleton" style="height:165px"></div><div class="car-card-body"><div class="skeleton" style="height:16px;margin-bottom:8px;border-radius:4px"></div></div></div>').join('')}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── LIGHTBOX ─────────────────────────────────────────── -->
+<div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:99999;flex-direction:column;align-items:center;justify-content:center">
+  <button onclick="closeLightbox()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border:none;color:white;width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:22px">✕</button>
+  <button onclick="lightboxPrev()" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:white;width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:24px">‹</button>
+  <img id="lightboxImg" src="" alt="" style="max-width:92vw;max-height:84vh;object-fit:contain;border-radius:8px">
+  <div id="lightboxCaption" style="color:rgba(255,255,255,.6);font-size:13px;margin-top:12px"></div>
+  <button onclick="lightboxNext()" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:white;width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:24px">›</button>
+  <!-- Thumbnail strip -->
+  <div id="lightboxThumbs" style="display:flex;gap:8px;margin-top:16px;overflow-x:auto;max-width:90vw;padding:4px"></div>
+</div>
+
+<div id="site-footer"></div>
+<div id="msgToast" style="display:none;position:fixed;bottom:20px;right:20px;background:#1A1A2E;color:white;padding:12px 20px;border-radius:8px;font-weight:600;z-index:99998"></div>
+
+<script>
+function calcEMI() {
+  const P=parseFloat(document.getElementById('emiPrice').value)||0;
+  const r=(parseFloat(document.getElementById('emiRate').value)||9.5)/12/100;
+  const n=parseInt(document.getElementById('emiTenure').value)||60;
+  if(P>0&&r>0&&n>0){const emi=(P*r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);document.getElementById('emiResult').textContent='₹'+Math.round(emi).toLocaleString('en-IN')+'/mo';}
+}
+function showMsg(m){const t=document.getElementById('msgToast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500)}
+
+let lbImages=[],lbIdx=0;
+function openLightbox(i){lbIdx=i;document.getElementById('lightbox').style.display='flex';updateLightbox();}
+function closeLightbox(){document.getElementById('lightbox').style.display='none';}
+function lightboxNext(){lbIdx=(lbIdx+1)%lbImages.length;updateLightbox();}
+function lightboxPrev(){lbIdx=(lbIdx-1+lbImages.length)%lbImages.length;updateLightbox();}
+function updateLightbox(){
+  document.getElementById('lightboxImg').src=lbImages[lbIdx]||'';
+  document.getElementById('lightboxCaption').textContent=`Photo ${lbIdx+1} of ${lbImages.length}`;
+  document.getElementById('lightboxThumbs').innerHTML=lbImages.map((s,i)=>`<img src="${s}" onclick="lbIdx=${i};updateLightbox()" style="height:56px;border-radius:6px;cursor:pointer;border:2px solid ${i===lbIdx?'#C0392B':'transparent'};object-fit:cover;aspect-ratio:4/3">`).join('');
+}
+document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===document.getElementById('lightbox'))closeLightbox();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();if(e.key==='ArrowRight')lightboxNext();if(e.key==='ArrowLeft')lightboxPrev();});
+</script>
+
+<script type="module">
+import { injectHeader, injectFooter, getCarById, getCars, renderCarCard, initWishlist, initBackToTop, getSampleCars, getUrlParam, fmtKm, fmtPrice, showToast, SITE } from '../assets/js/app.js';
+
+injectHeader(); injectFooter(); initWishlist(); initBackToTop();
+
+const carId = getUrlParam('id');
+if (!carId) { document.getElementById('carTitle').textContent = '❌ Car not found'; }
+
+async function loadCar() {
+  let car = null;
+  try {
+    car = await getCarById(carId);
+  } catch(e) {}
+
+  if (!car) {
+    // Try sample cars as fallback
+    car = getSampleCars().find(c => c.id === carId);
+  }
+
+  if (!car) {
+    document.getElementById('carTitle').textContent = '❌ Car not found';
+    return;
+  }
+
+  // Update page title/meta
+  const title = car.title || `${car.year} ${car.brand} ${car.model}`;
+  document.getElementById('pageTitle').textContent = `${title} — AutoMart`;
+  document.getElementById('pageMeta').content = `${title} for sale. ${fmtPrice(car.price)}. ${car.location || ''}`;
+  document.getElementById('carTitle').textContent = title;
+  document.getElementById('breadCrumbTitle').textContent = title;
+
+  // Gallery
+  const images = car.images?.length ? car.images : (car.thumbnail ? [car.thumbnail] : ['../assets/images/car-placeholder.svg']);
+  window.lbImages = images;
+
+  const mainImg = document.getElementById('mainCarImage');
+  mainImg.src = images[0];
+  mainImg.alt = title;
+
+  const thumbGrid = document.getElementById('thumbGrid');
+  if (images.length > 1) {
+    thumbGrid.innerHTML = images.slice(1, 5).map((src, i) => {
+      const isLast = i === 3 && images.length > 5;
+      return `<div style="border-radius:8px;overflow:hidden;height:100px;cursor:pointer;position:relative" onclick="openLightbox(${i+1})">
+        <img src="${src}" alt="Photo ${i+2}" style="width:100%;height:100%;object-fit:cover;transition:opacity .2s" loading="lazy">
+        ${isLast ? `<div style="position:absolute;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:16px">+${images.length-5}</div>` : ''}
+      </div>`;
+    }).join('');
+  } else {
+    thumbGrid.style.display = 'none';
+  }
+
+  // Meta badges
+  document.getElementById('carMeta').innerHTML = [
+    car.location ? `<span class="detail-badge">📍 ${car.location}</span>` : '',
+    car.year     ? `<span class="detail-badge">📅 ${car.year}</span>` : '',
+    car.km       ? `<span class="detail-badge">🛣️ ${fmtKm(car.km)}</span>` : '',
+    '<span class="detail-badge verified">✓ Verified</span>',
+  ].join('');
+
+  // Key specs
+  const specs = [
+    ['Year', car.year, '📅'], ['KM Driven', fmtKm(car.km), '🛣️'], ['Fuel', car.fuelType, '⛽'],
+    ['Transmission', car.transmission, '⚙️'], ['Owner', car.owner, '👤'], ['Color', car.color, '🎨'],
+    ['Engine', car.engine ? car.engine+' cc' : '', '🔧'], ['Power', car.power, '⚡'], ['Mileage', car.mileage ? car.mileage+' kmpl' : '', '🏁'],
+  ].filter(([,v])=>v);
+
+  document.getElementById('carSpecs').innerHTML = specs.map(([l,v,ic]) => `
+    <div class="spec-full-item"><span class="s-label">${ic} ${l}</span><span class="s-val">${v}</span></div>`).join('');
+
+  // Description
+  if (car.description) {
+    document.getElementById('carDescription').style.display = 'block';
+    document.getElementById('carDescText').textContent = car.description;
+  }
+
+  // Details table
+  const details = [
+    ['Registration No.', car.regNumber], ['Insurance Until', car.insurance], ['Condition', car.condition],
+    ['Body Type', car.bodyType], ['Seller Type', car.sellerType || 'Individual'],
+  ].filter(([,v])=>v);
+  document.getElementById('detailsTable').innerHTML = details.map(([l,v])=>`
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <span style="font-size:11px;color:var(--color-gray);font-weight:600;text-transform:uppercase">${l}</span>
+      <span style="font-size:14px;font-weight:600;color:var(--color-charcoal)">${v}</span>
+    </div>`).join('');
+
+  // EMI calculator
+  if (car.price) {
+    document.getElementById('emiPrice').value = Math.round(parseFloat(car.price) * 100000);
+    calcEMI();
+  }
+
+  // Share links
+  const url = encodeURIComponent(window.location.href);
+  const t   = encodeURIComponent(title);
+  document.getElementById('waShare').href = `https://wa.me/?text=${t}%20${url}`;
+  document.getElementById('fbShare').href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+
+  // Price / contact box
+  document.getElementById('contactPrice').textContent = fmtPrice(car.price);
+  if (car.emi) document.getElementById('contactEmi').innerHTML = `EMI starts at <strong>₹${parseInt(car.emi).toLocaleString('en-IN')}/mo</strong>`;
+
+  const actions = document.getElementById('contactActions');
+  if (car.status === 'sold') {
+    actions.innerHTML = '<div style="padding:14px;background:#fef2f2;border-radius:8px;text-align:center;color:#E74C3C;font-weight:700">This car has been sold</div>';
+  } else {
+    const phone = car.sellerPhone || SITE.phone;
+    const wa    = car.sellerWhatsapp || phone.replace(/[^0-9]/g,'');
+    actions.innerHTML = `
+      <a href="tel:${phone}" class="btn-call"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.55 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call Seller</a>
+      <a href="https://wa.me/${wa}?text=Hi,%20I%20am%20interested%20in%20your%20${t}%20listed%20on%20AutoMart." target="_blank" class="btn-whatsapp">💬 WhatsApp Seller</a>
+      <button onclick="window.location.href='sell.html'" style="padding:12px;background:transparent;border:1px solid var(--color-border);border-radius:8px;font-size:14px;cursor:pointer;font-weight:600;width:100%">🚗 Sell Your Car Too</button>`;
+  }
+
+  // Seller
+  if (car.sellerName) {
+    document.getElementById('sellerInfo').style.display = 'flex';
+    document.getElementById('sellerAvatar').textContent = car.sellerName[0].toUpperCase();
+    document.getElementById('sellerName').textContent = car.sellerName;
+    document.getElementById('sellerType').textContent = car.sellerType || 'Individual Seller';
+  }
+
+  // Similar cars
+  try {
+    const similar = await getCars({ brand: car.brand });
+    const filtered = similar.filter(c => c.id !== carId).slice(0,6);
+    const row = document.getElementById('similarCars');
+    row.innerHTML = filtered.length ? filtered.map(renderCarCard).join('') : '<p style="padding:20px;color:var(--color-gray)">No similar cars found.</p>';
+  } catch(e) {
+    const samples = getSampleCars().filter(c=>c.id!==carId).slice(0,4);
+    document.getElementById('similarCars').innerHTML = samples.map(renderCarCard).join('');
+  }
+}
+
+loadCar();
+</script>
+</body>
+</html>

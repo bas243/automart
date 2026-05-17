@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — AutoMart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+<div style="background:linear-gradient(135deg,var(--color-dark) 0%,var(--color-primary) 100%);padding:80px 0;text-align:center">
+  <div class="container">
+    <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">EST. 2018 · INDIA'S TRUSTED MARKETPLACE</p>
+    <h1 style="color:white;font-size:clamp(32px,5vw,54px);margin-bottom:20px;font-family:'Rajdhani',sans-serif">Driving India's Used Car Revolution</h1>
+    <p style="color:rgba(255,255,255,.75);font-size:18px;max-width:640px;margin:0 auto">AutoMart was built on a simple belief — buying and selling a used car should be transparent, safe, and fair for everyone.</p>
+  </div>
+</div>
+
+<div style="background:white;padding:48px 0;border-bottom:1px solid var(--color-border)">
+  <div class="container">
+    <div class="stats-row">
+      ${[['50,000+','Car Listings','🚗'],['1 Lakh+','Happy Customers','😊'],['200+','Cities Covered','📍'],['7 Years','In Business','🏆']].map(([n,l,ic])=>`
+      <div class="stat-card" style="text-align:center;padding:28px;border:1px solid var(--color-border);border-radius:16px">
+        <div style="font-size:32px;margin-bottom:8px">${ic}</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:44px;color:var(--color-primary);font-weight:700">${n}</div>
+        <p style="color:var(--color-gray);font-size:14px;margin-top:6px">${l}</p>
+      </div>`).join('')}
+    </div>
+  </div>
+</div>
+
+<div style="padding:64px 0">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+      <div>
+        <h2 class="section-title" style="margin-bottom:20px">Our Mission</h2>
+        <p style="font-size:16px;color:var(--color-charcoal);line-height:1.8;margin-bottom:16px">At AutoMart, our mission is to create India's most trusted platform for buying and selling pre-owned vehicles. We believe every Indian deserves access to quality, affordable transportation.</p>
+        <p style="font-size:15px;color:var(--color-gray);line-height:1.8;margin-bottom:16px">Founded in 2018, we started with a simple idea: remove the information asymmetry and mistrust that plagued the used car market. We built technology that empowers both buyers and sellers with transparency, verified data, and fair pricing.</p>
+        <p style="font-size:15px;color:var(--color-gray);line-height:1.8">Today, with over 50,000 listings across 200+ cities, we're proud to be the go-to destination for second-hand car transactions in India.</p>
+      </div>
+      <div style="background:var(--color-light);border-radius:16px;padding:36px">
+        <h3 style="font-size:20px;margin-bottom:24px">Our Core Values</h3>
+        ${[['🔍','Transparency','No hidden fees, no misleading information.'],['🛡️','Trust & Safety','Every listing is verified. Every transaction is secure.'],['💡','Innovation','AI and data to give you the most accurate valuations.'],['🤝','Customer First','Support team always ready to help buyers and sellers.']].map(([ic,t,d])=>`
+        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:20px"><span style="font-size:24px;flex-shrink:0">${ic}</span><div><h4 style="font-size:15px;margin-bottom:4px">${t}</h4><p style="font-size:13px;color:var(--color-gray)">${d}</p></div></div>`).join('')}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="background:var(--color-light);padding:64px 0">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px">
+      <h2 class="section-title" style="display:inline-block">Meet Our Team</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px">
+      ${[['Rajesh Kumar','CEO & Co-Founder','R','#C0392B','15+ years in automotive'],['Priya Sharma','CTO & Co-Founder','P','#2980B9','Ex-Google, AI specialist'],['Amit Singh','Head of Operations','A','#27AE60','Built ops across 200+ cities'],['Divya Patel','Head of Support','D','#8E44AD','1L+ customers assisted']].map(([n,r,i,c,b])=>`
+      <div style="background:white;border-radius:12px;padding:24px;text-align:center;border:1px solid var(--color-border)">
+        <div style="width:72px;height:72px;background:${c};border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:28px;font-weight:700;margin:0 auto 14px">${i}</div>
+        <h3 style="font-size:17px;margin-bottom:4px">${n}</h3>
+        <p style="font-size:12px;color:var(--color-primary);font-weight:600;margin-bottom:8px">${r}</p>
+        <p style="font-size:12px;color:var(--color-gray)">${b}</p>
+      </div>`).join('')}
+    </div>
+  </div>
+</div>
+
+<div style="background:var(--color-dark);padding:64px 0;text-align:center">
+  <div class="container">
+    <h2 style="color:white;font-size:clamp(28px,4vw,42px);margin-bottom:16px;font-family:'Rajdhani',sans-serif">Ready to Buy or Sell?</h2>
+    <p style="color:rgba(255,255,255,.65);font-size:16px;margin-bottom:32px;max-width:500px;margin-left:auto;margin-right:auto">Join over 1 lakh satisfied customers who've found their perfect car or sold at the best price.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="cars.html" class="btn btn-primary btn-lg">Browse Used Cars</a>
+      <a href="sell.html" style="padding:15px 32px;background:transparent;color:white;border:2px solid white;border-radius:8px;font-weight:600;font-size:16px;text-decoration:none">Sell Your Car</a>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+<script type="module">
+import { injectHeader, injectFooter, initBackToTop } from '../assets/js/app.js';
+injectHeader(); injectFooter(); initBackToTop();
+</script>
+</body>
+</html>
