@@ -183,8 +183,12 @@ function initHeaderJS() {
     isOpen = !isOpen;
     nav.classList.toggle('open', isOpen);
     document.body.classList.toggle('nav-open', isOpen);
-    ham.style.display = isOpen ? 'none' : '';
+    ham.style.display  = isOpen ? 'none' : '';
     close.style.display = isOpen ? '' : 'none';
+    // Ensure first item has enough padding-top to clear any UI behind it
+    if (isOpen && nav) {
+      nav.style.paddingTop = '0';
+    }
   });
 
   document.addEventListener('click', e => {
