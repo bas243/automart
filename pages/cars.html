@@ -53,7 +53,12 @@
             <input type="number" id="maxPrice" placeholder="Max" step="0.5" style="width:50%;padding:8px;border:1px solid var(--color-border);border-radius:6px;font-size:13px">
           </div>
           <div style="display:flex;gap:5px;flex-wrap:wrap">
-            ${[['<2L','0','2'],['2-5L','2','5'],['5-10L','5','10'],['10-20L','10','20'],['20-40L','20','40'],['>40L','40','999']].map(([l,mn,mx])=>`<button class="budget-chip" data-min="${mn}" data-max="${mx}" style="padding:4px 9px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">${l}</button>`).join('')}
+            <button class="budget-chip" data-min="0"  data-max="2"   style="padding:4px 9px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">&lt;2L</button>
+            <button class="budget-chip" data-min="2"  data-max="5"   style="padding:4px 9px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">2–5L</button>
+            <button class="budget-chip" data-min="5"  data-max="10"  style="padding:4px 9px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">5–10L</button>
+            <button class="budget-chip" data-min="10" data-max="20"  style="padding:4px 9px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">10–20L</button>
+            <button class="budget-chip" data-min="20" data-max="40"  style="padding:4px 9px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">20–40L</button>
+            <button class="budget-chip" data-min="40" data-max="999" style="padding:4px 9px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">&gt;40L</button>
           </div>
         </div>
 
@@ -61,11 +66,16 @@
         <div class="filter-group">
           <div class="filter-group-title">Brand</div>
           <div class="filter-options" id="brandFilters">
-            ${['Maruti Suzuki','Hyundai','Tata Motors','Honda','Toyota','Ford','Volkswagen','Kia','Renault','Mahindra'].map(b=>`
-              <label class="filter-check">
-                <input type="radio" name="brand" value="${b}">
-                ${b}
-              </label>`).join('')}
+            <label class="filter-check"><input type="radio" name="brand" value="Maruti Suzuki"> Maruti Suzuki</label>
+            <label class="filter-check"><input type="radio" name="brand" value="Hyundai"> Hyundai</label>
+            <label class="filter-check"><input type="radio" name="brand" value="Tata Motors"> Tata Motors</label>
+            <label class="filter-check"><input type="radio" name="brand" value="Honda"> Honda</label>
+            <label class="filter-check"><input type="radio" name="brand" value="Toyota"> Toyota</label>
+            <label class="filter-check"><input type="radio" name="brand" value="Ford"> Ford</label>
+            <label class="filter-check"><input type="radio" name="brand" value="Volkswagen"> Volkswagen</label>
+            <label class="filter-check"><input type="radio" name="brand" value="Kia"> Kia</label>
+            <label class="filter-check"><input type="radio" name="brand" value="Renault"> Renault</label>
+            <label class="filter-check"><input type="radio" name="brand" value="Mahindra"> Mahindra</label>
           </div>
         </div>
 
@@ -73,8 +83,11 @@
         <div class="filter-group">
           <div class="filter-group-title">Fuel Type</div>
           <div class="filter-options">
-            ${['Petrol','Diesel','CNG','Electric','Hybrid'].map(f=>`
-              <label class="filter-check"><input type="radio" name="fuel" value="${f}">${f}</label>`).join('')}
+            <label class="filter-check"><input type="radio" name="fuel" value="Petrol"> Petrol</label>
+            <label class="filter-check"><input type="radio" name="fuel" value="Diesel"> Diesel</label>
+            <label class="filter-check"><input type="radio" name="fuel" value="CNG"> CNG</label>
+            <label class="filter-check"><input type="radio" name="fuel" value="Electric"> Electric</label>
+            <label class="filter-check"><input type="radio" name="fuel" value="Hybrid"> Hybrid</label>
           </div>
         </div>
 
@@ -82,8 +95,10 @@
         <div class="filter-group">
           <div class="filter-group-title">Transmission</div>
           <div class="filter-options">
-            ${['Manual','Automatic','AMT','CVT'].map(t=>`
-              <label class="filter-check"><input type="radio" name="trans" value="${t}">${t}</label>`).join('')}
+            <label class="filter-check"><input type="radio" name="trans" value="Manual"> Manual</label>
+            <label class="filter-check"><input type="radio" name="trans" value="Automatic"> Automatic</label>
+            <label class="filter-check"><input type="radio" name="trans" value="AMT"> AMT</label>
+            <label class="filter-check"><input type="radio" name="trans" value="CVT"> CVT</label>
           </div>
         </div>
 
@@ -92,7 +107,32 @@
           <div class="filter-group-title">Year (From)</div>
           <select id="minYear" style="width:100%;padding:10px;border:1px solid var(--color-border);border-radius:6px;font-size:13px">
             <option value="">Any Year</option>
-            ${Array.from({length:26},(_,i)=>2025-i).map(y=>`<option value="${y}">${y}</option>`).join('')}
+            <option value="2025">2025</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+            <option value="2020">2020</option>
+            <option value="2019">2019</option>
+            <option value="2018">2018</option>
+            <option value="2017">2017</option>
+            <option value="2016">2016</option>
+            <option value="2015">2015</option>
+            <option value="2014">2014</option>
+            <option value="2013">2013</option>
+            <option value="2012">2012</option>
+            <option value="2011">2011</option>
+            <option value="2010">2010</option>
+            <option value="2009">2009</option>
+            <option value="2008">2008</option>
+            <option value="2007">2007</option>
+            <option value="2006">2006</option>
+            <option value="2005">2005</option>
+            <option value="2004">2004</option>
+            <option value="2003">2003</option>
+            <option value="2002">2002</option>
+            <option value="2001">2001</option>
+            <option value="2000">2000</option>
           </select>
         </div>
 
@@ -100,7 +140,10 @@
         <div class="filter-group">
           <div class="filter-group-title">Max KM Driven</div>
           <div style="display:flex;gap:5px;flex-wrap:wrap">
-            ${[['<20k','20000'],['<50k','50000'],['<80k','80000'],['<1.5L','150000']].map(([l,v])=>`<button class="km-chip" data-km="${v}" style="padding:5px 9px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">${l}</button>`).join('')}
+            <button class="km-chip" data-km="20000"  style="padding:5px 9px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">&lt;20k</button>
+            <button class="km-chip" data-km="50000"  style="padding:5px 9px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">&lt;50k</button>
+            <button class="km-chip" data-km="80000"  style="padding:5px 9px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">&lt;80k</button>
+            <button class="km-chip" data-km="150000" style="padding:5px 9px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s">&lt;1.5L</button>
           </div>
         </div>
 
@@ -123,9 +166,7 @@
         <!-- Active filter chips -->
         <div id="activeFilters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px"></div>
 
-        <div class="cars-grid" id="carsGrid">
-          ${Array(8).fill(`<div class="car-card"><div class="car-card-image skeleton" style="height:185px"></div><div class="car-card-body"><div class="skeleton" style="height:18px;margin-bottom:8px;border-radius:4px"></div><div class="skeleton" style="height:14px;width:60%;border-radius:4px;margin-bottom:16px"></div><div class="skeleton" style="height:36px;border-radius:6px"></div></div></div>`).join('')}
-        </div>
+        <div class="cars-grid" id="carsGrid"></div>
 
         <div class="pagination" id="pagination"></div>
       </main>
@@ -136,8 +177,6 @@
 <div id="site-footer"></div>
 
 <style>
-.skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .budget-chip.active,.km-chip.active{background:var(--color-primary);color:white;border-color:var(--color-primary)}
 .filter-check input[type=radio]{accent-color:var(--color-primary)}
 </style>
@@ -155,7 +194,6 @@ let allCars = [];
 let currentPage = 1;
 let filters = {};
 
-// Read URL params on load
 function readUrlParams() {
   const p = new URLSearchParams(window.location.search);
   if (p.get('brand'))    { filters.brand    = p.get('brand');    document.querySelector(`input[name=brand][value="${p.get('brand')}"]`)?.click(); }
@@ -166,22 +204,20 @@ function readUrlParams() {
   if (p.get('sort'))     { filters.sort     = p.get('sort');     document.getElementById('sortSelect').value = p.get('sort'); }
 }
 
-// Collect filter state
 function collectFilters() {
-  const brand   = document.querySelector('input[name=brand]:checked')?.value;
-  const fuel    = document.querySelector('input[name=fuel]:checked')?.value;
-  const trans   = document.querySelector('input[name=trans]:checked')?.value;
-  const search  = document.getElementById('filterSearch')?.value?.trim();
-  const minP    = document.getElementById('minPrice')?.value;
-  const maxP    = document.getElementById('maxPrice')?.value;
-  const minY    = document.getElementById('minYear')?.value;
-  const maxKm   = document.querySelector('.km-chip.active')?.dataset?.km;
-  const sort    = document.getElementById('sortSelect')?.value;
-
-  return { brand, fuel, trans, search, minPrice:minP, maxPrice:maxP, minYear:minY, maxKm, sort };
+  return {
+    brand:    document.querySelector('input[name=brand]:checked')?.value,
+    fuel:     document.querySelector('input[name=fuel]:checked')?.value,
+    trans:    document.querySelector('input[name=trans]:checked')?.value,
+    search:   document.getElementById('filterSearch')?.value?.trim(),
+    minPrice: document.getElementById('minPrice')?.value,
+    maxPrice: document.getElementById('maxPrice')?.value,
+    minYear:  document.getElementById('minYear')?.value,
+    maxKm:    document.querySelector('.km-chip.active')?.dataset?.km,
+    sort:     document.getElementById('sortSelect')?.value,
+  };
 }
 
-// Render active chip pills
 function renderActiveFilters(f) {
   const c = document.getElementById('activeFilters');
   if (!c) return;
@@ -208,12 +244,10 @@ window.clearFilter = function(key) {
   applyAndRender();
 };
 
-// Render paginated cars
 function renderPage(cars, page) {
-  const grid = document.getElementById('carsGrid');
+  const grid  = document.getElementById('carsGrid');
   const start = (page - 1) * CARS_PER_PAGE;
   const slice = cars.slice(start, start + CARS_PER_PAGE);
-
   document.getElementById('resultsCount').textContent = cars.length;
 
   if (!slice.length) {
@@ -227,7 +261,6 @@ function renderPage(cars, page) {
     grid.innerHTML = slice.map(renderCarCard).join('');
   }
 
-  // Pagination
   const totalPages = Math.ceil(cars.length / CARS_PER_PAGE);
   const pag = document.getElementById('pagination');
   if (totalPages <= 1) { pag.innerHTML = ''; return; }
@@ -250,16 +283,12 @@ async function applyAndRender() {
   const f = collectFilters();
   filters = f;
   renderActiveFilters(f);
-
-  const grid = document.getElementById('carsGrid');
-  grid.innerHTML = Array(6).fill(`<div class="car-card"><div class="car-card-image skeleton" style="height:185px"></div><div class="car-card-body"><div class="skeleton" style="height:18px;margin-bottom:8px;border-radius:4px"></div><div class="skeleton" style="height:36px;border-radius:6px;margin-top:auto"></div></div></div>`).join('');
-
+  document.getElementById('carsGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--color-gray)">Loading cars…</div>';
   try {
     allCars = await getCars(f);
   } catch(e) {
     allCars = getSampleCars();
   }
-
   currentPage = 1;
   renderPage(allCars, currentPage);
 }
@@ -282,24 +311,18 @@ document.querySelectorAll('.km-chip').forEach(btn => {
   });
 });
 
-// Auto filter on radio change
 document.querySelectorAll('input[type=radio]').forEach(r => r.addEventListener('change', applyAndRender));
-
-// Sort change
 document.getElementById('sortSelect')?.addEventListener('change', applyAndRender);
 
-// Search with debounce
 let searchTimer;
 document.getElementById('filterSearch')?.addEventListener('input', () => {
   clearTimeout(searchTimer);
   searchTimer = setTimeout(applyAndRender, 500);
 });
 
-// Apply button
 document.getElementById('applyFilters')?.addEventListener('click', applyAndRender);
 
-// Mobile filter toggle
-const sidebar = document.getElementById('filterSidebar');
+const sidebar     = document.getElementById('filterSidebar');
 const mobileToggle = document.getElementById('mobileFilterToggle');
 
 function checkMobileFilter() {
@@ -321,11 +344,8 @@ mobileToggle?.addEventListener('click', () => {
 
 window.addEventListener('resize', checkMobileFilter);
 checkMobileFilter();
-
-// Year filter change
 document.getElementById('minYear')?.addEventListener('change', applyAndRender);
 
-// Init
 readUrlParams();
 applyAndRender();
 </script>

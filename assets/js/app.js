@@ -501,6 +501,42 @@ export function initBackToTop() {
   btn.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
 }
 
+/** Touch swipe + mouse drag for horizontal car carousels */
+export function initCarousels() {
+  document.querySelectorAll('.cars-row').forEach(row => {
+    // --- Mouse drag (desktop) ---
+    let isDown = false, startX = 0, scrollLeft = 0;
+    row.style.cursor = 'grab';
+    row.addEventListener('mousedown', e => {
+      isDown = true;
+      row.style.cursor = 'grabbing';
+      startX = e.pageX - row.offsetLeft;
+      scrollLeft = row.scrollLeft;
+      e.preventDefault();
+    });
+    row.addEventListener('mouseleave', () => { isDown = false; row.style.cursor = 'grab'; });
+    row.addEventListener('mouseup',    () => { isDown = false; row.style.cursor = 'grab'; });
+    row.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x    = e.pageX - row.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      row.scrollLeft = scrollLeft - walk;
+    });
+
+    // --- Touch swipe (mobile) ---
+    let touchStartX = 0, touchScrollLeft = 0;
+    row.addEventListener('touchstart', e => {
+      touchStartX    = e.touches[0].clientX;
+      touchScrollLeft = row.scrollLeft;
+    }, { passive: true });
+    row.addEventListener('touchmove', e => {
+      const dx = touchStartX - e.touches[0].clientX;
+      row.scrollLeft = touchScrollLeft + dx;
+    }, { passive: true });
+  });
+}
+
 // Global search redirect
 window.doSearch = function() {
   const q = document.getElementById('headerSearchInput')?.value?.trim();

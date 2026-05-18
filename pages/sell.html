@@ -16,25 +16,36 @@
 <!-- HOW IT WORKS -->
 <div style="background:white;padding:28px 0;border-bottom:1px solid var(--color-border)">
   <div class="container">
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
-      ${[['📝','Fill Details','Enter your car info & upload photos'],['💰','Get Valuation','Receive instant free market price'],['📢','Get Buyers','Connect with thousands of buyers'],['✅','Sell & Get Paid','Complete safely & get your money']].map(([ic,t,d],i)=>`
+    <div class="sell-steps-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
       <div style="display:flex;align-items:flex-start;gap:14px">
-        <div style="width:44px;height:44px;background:var(--color-primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">${ic}</div>
-        <div><h4 style="font-size:15px;margin-bottom:3px">${t}</h4><p style="font-size:12px;color:var(--color-gray)">${d}</p></div>
-      </div>`).join('')}
+        <div style="width:44px;height:44px;background:var(--color-primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📝</div>
+        <div><h4 style="font-size:15px;margin-bottom:3px">Fill Details</h4><p style="font-size:12px;color:var(--color-gray)">Enter your car info &amp; photos</p></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:14px">
+        <div style="width:44px;height:44px;background:var(--color-primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">💰</div>
+        <div><h4 style="font-size:15px;margin-bottom:3px">Get Valuation</h4><p style="font-size:12px;color:var(--color-gray)">Receive instant free market price</p></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:14px">
+        <div style="width:44px;height:44px;background:var(--color-primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📢</div>
+        <div><h4 style="font-size:15px;margin-bottom:3px">Get Buyers</h4><p style="font-size:12px;color:var(--color-gray)">Connect with thousands of buyers</p></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:14px">
+        <div style="width:44px;height:44px;background:var(--color-primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">✅</div>
+        <div><h4 style="font-size:15px;margin-bottom:3px">Sell &amp; Get Paid</h4><p style="font-size:12px;color:var(--color-gray)">Complete safely &amp; get your money</p></div>
+      </div>
     </div>
   </div>
 </div>
 
 <div style="background:var(--color-light);padding:60px 0">
   <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:start">
+    <div class="sell-layout" style="display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:start">
       <!-- FORM -->
       <div style="background:white;border-radius:16px;padding:40px;box-shadow:var(--shadow-sm)">
         <h2 style="font-size:26px;margin-bottom:8px">📋 List Your Car for Free</h2>
         <p style="color:var(--color-gray);margin-bottom:28px;font-size:14px">Fill in your car details. Your listing will be reviewed and published within 24 hours.</p>
         <div id="sellSuccess" style="display:none;padding:16px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;color:#16a34a;font-weight:600;margin-bottom:20px">✅ Submitted! We'll contact you within 24 hours.</div>
-        <div id="sellError" style="display:none;padding:16px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;color:#dc2626;font-weight:600;margin-bottom:20px"></div>
+        <div id="sellError"   style="display:none;padding:16px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;color:#dc2626;font-weight:600;margin-bottom:20px"></div>
         <form id="sellForm">
           <div style="border-bottom:2px solid var(--color-primary);margin-bottom:20px;padding-bottom:6px"><h3 style="font-size:16px;color:var(--color-primary)">👤 Your Details</h3></div>
           <div class="form-row">
@@ -51,12 +62,39 @@
             <div class="form-group"><label>Car Model *</label><input type="text" name="model" required placeholder="Swift, City…"></div>
           </div>
           <div class="form-row">
-            <div class="form-group"><label>Year *</label><select name="year" required><option value="">Select Year</option>${Array.from({length:26},(_,i)=>2025-i).map(y=>`<option value="${y}">${y}</option>`).join('')}</select></div>
-            <div class="form-group"><label>Fuel Type *</label><select name="fuelType" required><option value="">Select</option>${['Petrol','Diesel','CNG','Electric','Hybrid'].map(f=>`<option value="${f}">${f}</option>`).join('')}</select></div>
+            <div class="form-group"><label>Year *</label>
+              <select name="year" required>
+                <option value="">Select Year</option>
+                <option>2025</option><option>2024</option><option>2023</option><option>2022</option>
+                <option>2021</option><option>2020</option><option>2019</option><option>2018</option>
+                <option>2017</option><option>2016</option><option>2015</option><option>2014</option>
+                <option>2013</option><option>2012</option><option>2011</option><option>2010</option>
+                <option>2009</option><option>2008</option><option>2007</option><option>2006</option>
+                <option>2005</option><option>2004</option><option>2003</option><option>2002</option>
+                <option>2001</option><option>2000</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Fuel Type *</label>
+              <select name="fuelType" required>
+                <option value="">Select</option>
+                <option>Petrol</option><option>Diesel</option><option>CNG</option>
+                <option>Electric</option><option>Hybrid</option>
+              </select>
+            </div>
           </div>
           <div class="form-row">
-            <div class="form-group"><label>Transmission</label><select name="transmission"><option value="">Select</option>${['Manual','Automatic','AMT','CVT'].map(t=>`<option value="${t}">${t}</option>`).join('')}</select></div>
-            <div class="form-group"><label>Owner Number</label><select name="owner">${['1st Owner','2nd Owner','3rd Owner','4th+ Owner'].map(o=>`<option value="${o}">${o}</option>`).join('')}</select></div>
+            <div class="form-group"><label>Transmission</label>
+              <select name="transmission">
+                <option value="">Select</option>
+                <option>Manual</option><option>Automatic</option><option>AMT</option><option>CVT</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Owner Number</label>
+              <select name="owner">
+                <option>1st Owner</option><option>2nd Owner</option>
+                <option>3rd Owner</option><option>4th+ Owner</option>
+              </select>
+            </div>
           </div>
           <div class="form-row">
             <div class="form-group"><label>KM Driven *</label><input type="number" name="km" required placeholder="45000"></div>
@@ -72,12 +110,27 @@
           <p style="text-align:center;font-size:12px;color:var(--color-gray);margin-top:12px">Free listing · No hidden charges · Quick review</p>
         </form>
       </div>
+
       <!-- SIDEBAR -->
       <div style="display:flex;flex-direction:column;gap:20px;position:sticky;top:calc(var(--header-height)+20px)">
         <div style="background:white;border-radius:12px;padding:24px;border:1px solid var(--color-border)">
           <h3 style="font-size:18px;margin-bottom:16px">🏆 Why Sell With Us?</h3>
-          ${[['🆓','Free Listing','100% free to list, no commission'],['👁️','Huge Reach','Seen by 50,000+ buyers'],['⚡','Sell Fast','Average 7 days to sell'],['🛡️','Verified Buyers','Only genuine buyers contact you']].map(([ic,t,d])=>`
-          <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px"><span style="font-size:20px;flex-shrink:0">${ic}</span><div><strong style="font-size:13px">${t}</strong><p style="font-size:12px;color:var(--color-gray);margin-top:2px">${d}</p></div></div>`).join('')}
+          <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px">
+            <span style="font-size:20px;flex-shrink:0">🆓</span>
+            <div><strong style="font-size:13px">Free Listing</strong><p style="font-size:12px;color:var(--color-gray);margin-top:2px">100% free to list, no commission</p></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px">
+            <span style="font-size:20px;flex-shrink:0">👁️</span>
+            <div><strong style="font-size:13px">Huge Reach</strong><p style="font-size:12px;color:var(--color-gray);margin-top:2px">Seen by 50,000+ buyers</p></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px">
+            <span style="font-size:20px;flex-shrink:0">⚡</span>
+            <div><strong style="font-size:13px">Sell Fast</strong><p style="font-size:12px;color:var(--color-gray);margin-top:2px">Average 7 days to sell</p></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px">
+            <span style="font-size:20px;flex-shrink:0">🛡️</span>
+            <div><strong style="font-size:13px">Verified Buyers</strong><p style="font-size:12px;color:var(--color-gray);margin-top:2px">Only genuine buyers contact you</p></div>
+          </div>
         </div>
         <div style="background:var(--color-primary);border-radius:12px;padding:24px;text-align:center;color:white">
           <div style="font-size:32px;margin-bottom:10px">📊</div>
@@ -98,12 +151,12 @@ document.getElementById('sellForm')?.addEventListener('submit', async e => {
   const btn = document.getElementById('sellBtn');
   const ok  = document.getElementById('sellSuccess');
   const err = document.getElementById('sellError');
-  btn.textContent='Submitting…'; btn.disabled=true; ok.style.display='none'; err.style.display='none';
-  const data = Object.fromEntries(new FormData(e.target));
-  const res  = await submitEnquiry({ type:'sell', ...data });
-  if (res) { ok.style.display='block'; e.target.reset(); }
-  else { err.style.display='block'; err.textContent='❌ Error submitting. Please try again.'; }
-  btn.textContent='🚀 Submit My Car for Free'; btn.disabled=false;
+  btn.textContent = 'Submitting…'; btn.disabled = true;
+  ok.style.display = 'none'; err.style.display = 'none';
+  const res = await submitEnquiry({ type:'sell', ...Object.fromEntries(new FormData(e.target)) });
+  if (res) { ok.style.display = 'block'; e.target.reset(); }
+  else { err.style.display = 'block'; err.textContent = '❌ Error submitting. Please try again.'; }
+  btn.textContent = '🚀 Submit My Car for Free'; btn.disabled = false;
 });
 </script>
 </body>

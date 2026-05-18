@@ -6,25 +6,76 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .legal-body h2 { font-size:20px; margin:32px 0 10px; color:var(--color-charcoal); }
+    .legal-body p  { font-size:14px; color:var(--color-gray); line-height:1.8; margin-bottom:12px; }
+    .legal-body ul { padding-left:20px; margin-bottom:12px; }
+    .legal-body ul li { font-size:14px; color:var(--color-gray); line-height:1.8; list-style:disc; }
+  </style>
 </head>
 <body>
 <div id="site-header"></div>
 <div class="page-header"><div class="container"><h1>Privacy Policy</h1><div class="breadcrumb"><a href="../index.html">Home</a><span class="sep">›</span><span class="current">Privacy Policy</span></div></div></div>
-<div style="background:var(--color-light);padding:60px 0"><div class="container">
-<div style="max-width:900px;margin:0 auto;background:white;border-radius:16px;padding:48px;box-shadow:var(--shadow-sm)">
-<p style="color:var(--color-gray);margin-bottom:32px">Last updated: January 2025</p>
-<h2 style="font-size:22px;margin-bottom:12px;margin-top:32px">1. Information We Collect</h2>
-<p style="color:var(--color-gray);line-height:1.8;margin-bottom:16px">We collect information you provide directly, including name, email, phone number, and car details when you list a car or submit an enquiry. We also collect usage data to improve our services.</p>
-<h2 style="font-size:22px;margin-bottom:12px;margin-top:32px">2. How We Use Your Information</h2>
-<p style="color:var(--color-gray);line-height:1.8;margin-bottom:16px">Your information is used to facilitate car listings, respond to enquiries, improve our platform, and send relevant communications. We never sell your personal data to third parties.</p>
-<h2 style="font-size:22px;margin-bottom:12px;margin-top:32px">3. Data Storage</h2>
-<p style="color:var(--color-gray);line-height:1.8;margin-bottom:16px">Your data is stored securely using Google Firebase, which complies with GDPR and other privacy regulations. Data is encrypted in transit and at rest.</p>
-<h2 style="font-size:22px;margin-bottom:12px;margin-top:32px">4. Contact Us</h2>
-<p style="color:var(--color-gray);line-height:1.8">For privacy concerns, contact us at <a href="mailto:support@automart.in">support@automart.in</a></p>
-</div></div></div>
+
+<div style="background:white;padding:60px 0">
+  <div class="container" style="max-width:820px">
+    <div class="legal-body">
+      <p style="background:var(--color-light);border-left:4px solid var(--color-primary);padding:14px 18px;border-radius:0 8px 8px 0;font-size:13px;margin-bottom:28px"><strong>Last updated:</strong> May 2025 · This policy applies to all users of AutoMart.</p>
+
+      <h2>1. Information We Collect</h2>
+      <p>We collect information you provide directly to us when you create a listing, contact a seller, or use our services. This includes:</p>
+      <ul>
+        <li>Name, email address, and phone number</li>
+        <li>Car listing details you provide (brand, model, year, price, photos)</li>
+        <li>Messages and enquiries sent through our platform</li>
+        <li>Device information and browsing data via cookies</li>
+      </ul>
+
+      <h2>2. How We Use Your Information</h2>
+      <p>We use the information we collect to:</p>
+      <ul>
+        <li>Operate, maintain, and improve our platform</li>
+        <li>Connect buyers with sellers</li>
+        <li>Send you transactional notifications and support responses</li>
+        <li>Prevent fraud and ensure platform security</li>
+        <li>Comply with legal obligations</li>
+      </ul>
+
+      <h2>3. Information Sharing</h2>
+      <p>We do not sell, trade, or rent your personal information to third parties. We may share information:</p>
+      <ul>
+        <li>With other users as part of a listing or enquiry (e.g. your name and phone to a car seller)</li>
+        <li>With service providers who assist in our operations (e.g. Firebase by Google for database hosting)</li>
+        <li>When required by law or to protect our legal rights</li>
+      </ul>
+
+      <h2>4. Cookies</h2>
+      <p>We use cookies and similar technologies to remember your preferences, analyse site traffic, and improve user experience. You can disable cookies in your browser settings, though some features may not work as expected.</p>
+
+      <h2>5. Data Security</h2>
+      <p>We implement industry-standard security measures including encrypted database connections (Firebase), HTTPS for all data transmission, and access controls. However, no method of internet transmission is 100% secure.</p>
+
+      <h2>6. Data Retention</h2>
+      <p>We retain your personal information for as long as your account is active or as needed to provide services. You can request deletion of your data by contacting us at support@automart.in.</p>
+
+      <h2>7. Your Rights</h2>
+      <p>You have the right to access, correct, or delete personal data we hold about you. To exercise these rights, contact us at <a href="mailto:support@automart.in">support@automart.in</a>.</p>
+
+      <h2>8. Third-Party Links</h2>
+      <p>Our platform may contain links to third-party websites. We are not responsible for their privacy practices. Please review their policies before sharing any personal data.</p>
+
+      <h2>9. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by updating the "Last updated" date above. Continued use of AutoMart after changes constitutes acceptance of the new policy.</p>
+
+      <h2>10. Contact Us</h2>
+      <p>If you have questions or concerns about this policy, please contact: <strong>AutoMart Support</strong> · <a href="mailto:support@automart.in">support@automart.in</a> · +91 1800-123-4567</p>
+    </div>
+  </div>
+</div>
 <div id="site-footer"></div>
 <script type="module">
-import { injectHeader, injectFooter } from '../assets/js/app.js';
-injectHeader(); injectFooter();
+import { injectHeader, injectFooter, initBackToTop } from '../assets/js/app.js';
+injectHeader(); injectFooter(); initBackToTop();
 </script>
-</body></html>
+</body>
+</html>

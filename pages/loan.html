@@ -1,120 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Car Loan & EMI Calculator — AutoMart</title>
-  <meta name="description" content="Calculate your car loan EMI instantly. Compare bank rates, apply for car loans with lowest interest rates.">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Loan &amp; EMI Calculator — AutoMart</title>
+  <meta name="description" content="Calculate your car loan EMI. Get the best interest rates for used car financing.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 <div id="site-header"></div>
-<div class="page-header">
-  <div class="container">
-    <h1>Car Loan &amp; EMI Calculator</h1>
-    <div class="breadcrumb"><a href="../index.html">Home</a><span class="sep">›</span><span class="current">Car Loan</span></div>
-  </div>
-</div>
+<div class="page-header"><div class="container"><h1>Car Loan &amp; EMI Calculator</h1><div class="breadcrumb"><a href="../index.html">Home</a><span class="sep">›</span><span class="current">Car Loan</span></div></div></div>
 
 <div style="background:var(--color-light);padding:60px 0">
   <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:start">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start">
 
       <!-- CALCULATOR -->
-      <div style="background:white;border-radius:16px;padding:40px;box-shadow:var(--shadow-sm)">
-        <h2 style="font-size:26px;margin-bottom:8px">🧮 EMI Calculator</h2>
-        <p style="color:var(--color-gray);margin-bottom:32px;font-size:14px">Calculate your monthly payment. Adjust values to find the best plan.</p>
+      <div style="background:white;border-radius:16px;padding:36px;box-shadow:var(--shadow-sm)">
+        <h2 style="font-size:24px;margin-bottom:6px">🧮 EMI Calculator</h2>
+        <p style="color:var(--color-gray);font-size:14px;margin-bottom:28px">Calculate your monthly EMI for a used car loan.</p>
 
         <div class="form-group">
-          <label style="display:flex;justify-content:space-between"><span>Car Price / Loan Amount (₹)</span><strong id="loanAmtDisplay">₹5,00,000</strong></label>
-          <input type="range" id="loanAmount" min="100000" max="10000000" step="50000" value="500000" oninput="updateCalc()" class="range-slider" style="width:100%;margin:10px 0">
-          <div class="range-vals"><span>₹1L</span><span>₹1Cr</span></div>
-          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
-            ${[300000,500000,800000,1200000,2000000,5000000].map(v=>`<button onclick="document.getElementById('loanAmount').value=${v};updateCalc()" style="padding:4px 10px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s" onmouseover="this.style.background='var(--color-primary)';this.style.color='white'" onmouseout="this.style.background='white';this.style.color='inherit'">₹${v>=100000?(v/100000)+'L':'₹'+v}</button>`).join('')}
-          </div>
+          <label>Loan Amount (₹)</label>
+          <input type="number" id="loanAmount" value="500000" min="50000" step="10000" style="width:100%">
         </div>
-
         <div class="form-group">
-          <label style="display:flex;justify-content:space-between"><span>Down Payment (₹)</span><strong id="downDisplay">₹1,00,000</strong></label>
-          <input type="range" id="downPayment" min="0" max="5000000" step="25000" value="100000" oninput="updateCalc()" class="range-slider" style="width:100%;margin:10px 0">
-          <div style="font-size:13px;color:var(--color-gray);margin-top:4px">Actual Loan Amount: <strong id="actualLoan" style="color:var(--color-charcoal)">₹4,00,000</strong></div>
+          <label>Interest Rate (% per year)</label>
+          <input type="number" id="interestRate" value="9.5" min="5" max="25" step="0.1" style="width:100%">
         </div>
-
         <div class="form-group">
-          <label style="display:flex;justify-content:space-between"><span>Interest Rate</span><strong id="rateDisplay">9.5% p.a.</strong></label>
-          <input type="range" id="interestRate" min="7" max="18" step="0.5" value="9.5" oninput="updateCalc()" class="range-slider" style="width:100%;margin:10px 0">
-          <div class="range-vals"><span>7%</span><span>18%</span></div>
+          <label>Loan Tenure (Months)</label>
+          <select id="tenure" style="width:100%">
+            <option value="12">12 Months (1 Year)</option>
+            <option value="24">24 Months (2 Years)</option>
+            <option value="36" selected>36 Months (3 Years)</option>
+            <option value="48">48 Months (4 Years)</option>
+            <option value="60">60 Months (5 Years)</option>
+            <option value="72">72 Months (6 Years)</option>
+            <option value="84">84 Months (7 Years)</option>
+          </select>
         </div>
-
         <div class="form-group">
-          <label style="display:flex;justify-content:space-between"><span>Loan Tenure</span><strong id="tenureDisplay">5 years (60 months)</strong></label>
-          <input type="range" id="loanTenure" min="12" max="84" step="6" value="60" oninput="updateCalc()" class="range-slider" style="width:100%;margin:10px 0">
-          <div class="range-vals"><span>1 year</span><span>7 years</span></div>
+          <label>Down Payment (₹)</label>
+          <input type="number" id="downPayment" value="100000" min="0" step="5000" style="width:100%">
         </div>
+        <button onclick="calcEMI()" style="width:100%;padding:14px;background:var(--color-primary);color:white;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;margin-top:4px">Calculate EMI</button>
 
-        <!-- Result Box -->
-        <div style="background:linear-gradient(135deg,var(--color-dark),var(--color-dark-2));border-radius:12px;padding:28px;margin-top:28px">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px;text-align:center">
-            <div>
-              <p style="color:rgba(255,255,255,.6);font-size:12px;margin-bottom:6px">Monthly EMI</p>
-              <p id="emiResult" style="font-family:'Rajdhani',sans-serif;font-size:30px;font-weight:700;color:var(--color-accent)">₹8,049</p>
-            </div>
-            <div style="border-left:1px solid rgba(255,255,255,.1);border-right:1px solid rgba(255,255,255,.1)">
-              <p style="color:rgba(255,255,255,.6);font-size:12px;margin-bottom:6px">Total Interest</p>
-              <p id="totalInterest" style="font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:var(--color-primary-light)">₹82,960</p>
-            </div>
-            <div>
-              <p style="color:rgba(255,255,255,.6);font-size:12px;margin-bottom:6px">Total Payment</p>
-              <p id="totalPayment" style="font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:white">₹4,82,960</p>
-            </div>
-          </div>
-          <!-- Breakdown bar -->
-          <div>
-            <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-              <span style="font-size:11px;color:rgba(255,255,255,.5)">Principal <span id="principalPct" style="font-weight:700;color:var(--color-accent)">83%</span></span>
-              <span style="font-size:11px;color:rgba(255,255,255,.5)">Interest <span id="interestPct" style="font-weight:700;color:var(--color-primary-light)">17%</span></span>
-            </div>
-            <div style="height:8px;border-radius:4px;background:rgba(255,255,255,.1);overflow:hidden">
-              <div id="principalBar" style="height:100%;background:var(--color-accent);border-radius:4px;width:83%;transition:width .5s"></div>
-            </div>
-          </div>
-          <a href="contact.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;padding:12px 24px;background:var(--color-primary);color:white;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none">Apply for Car Loan →</a>
-        </div>
-
-        <!-- Amortization toggle -->
-        <div style="margin-top:24px">
-          <button onclick="toggleAmortization()" style="padding:10px 18px;background:var(--color-light);border:1px solid var(--color-border);border-radius:8px;font-weight:600;font-size:13px;cursor:pointer">📊 View Amortization Schedule</button>
-          <div id="amortTable" style="display:none;margin-top:16px;overflow-x:auto">
-            <table style="width:100%;border-collapse:collapse;font-size:13px">
-              <thead><tr style="background:var(--color-light)"><th style="padding:10px;text-align:left;border:1px solid var(--color-border)">Year</th><th style="padding:10px;text-align:right;border:1px solid var(--color-border)">Principal Paid</th><th style="padding:10px;text-align:right;border:1px solid var(--color-border)">Interest Paid</th><th style="padding:10px;text-align:right;border:1px solid var(--color-border)">Balance</th></tr></thead>
-              <tbody id="amortBody"></tbody>
-            </table>
+        <!-- RESULT -->
+        <div id="emiResult" style="display:none;margin-top:28px;background:var(--color-dark);border-radius:12px;padding:24px;color:white;text-align:center">
+          <p style="color:rgba(255,255,255,.6);font-size:13px;margin-bottom:8px">Monthly EMI</p>
+          <div id="emiAmount" style="font-family:'Rajdhani',sans-serif;font-size:48px;font-weight:700;color:var(--color-accent);line-height:1"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1)">
+            <div><div id="totalInterest" style="font-size:18px;font-weight:700;color:var(--color-primary-light)"></div><div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px">Total Interest</div></div>
+            <div><div id="totalPayment" style="font-size:18px;font-weight:700"></div><div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px">Total Payment</div></div>
+            <div><div id="principalAmt" style="font-size:18px;font-weight:700;color:#27AE60"></div><div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px">Principal</div></div>
           </div>
         </div>
       </div>
 
-      <!-- SIDEBAR -->
-      <div style="display:flex;flex-direction:column;gap:20px;position:sticky;top:calc(var(--header-height)+20px)">
-        <div style="background:white;border-radius:12px;padding:24px;border:1px solid var(--color-border)">
-          <h3 style="font-size:18px;margin-bottom:14px">💡 Loan Tips</h3>
-          ${[['Higher down payment','Reduces loan amount and total interest paid'],['Shorter tenure','Pay less interest overall, though EMI is higher'],['Good credit score','Score 750+ gets lowest interest rates'],['Compare lenders','Even 0.5% difference saves thousands']].map(([t,d])=>`
-          <div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--color-light)"><strong style="font-size:13px">✓ ${t}</strong><p style="font-size:12px;color:var(--color-gray);margin-top:3px">${d}</p></div>`).join('')}
+      <!-- INFO PANEL -->
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <div style="background:white;border-radius:16px;padding:32px;border:1px solid var(--color-border)">
+          <h3 style="font-size:20px;margin-bottom:20px">🏦 Partner Banks</h3>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--color-light);border-radius:8px">
+              <span style="font-weight:600">HDFC Bank</span><span style="color:var(--color-primary);font-weight:700">8.75% – 12%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--color-light);border-radius:8px">
+              <span style="font-weight:600">SBI</span><span style="color:var(--color-primary);font-weight:700">9.15% – 13%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--color-light);border-radius:8px">
+              <span style="font-weight:600">ICICI Bank</span><span style="color:var(--color-primary);font-weight:700">9.5% – 14%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--color-light);border-radius:8px">
+              <span style="font-weight:600">Axis Bank</span><span style="color:var(--color-primary);font-weight:700">9.75% – 13.5%</span>
+            </div>
+          </div>
         </div>
-        <div style="background:white;border-radius:12px;padding:24px;border:1px solid var(--color-border)">
-          <h3 style="font-size:16px;margin-bottom:14px">🏦 Partner Bank Rates</h3>
-          ${[['SBI','8.70%','7 years'],['HDFC Bank','8.90%','7 years'],['ICICI Bank','9.00%','7 years'],['Axis Bank','9.25%','7 years'],['Kotak','9.50%','5 years']].map(([b,r,t])=>`
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--color-light);border-radius:6px;margin-bottom:8px">
-            <span style="font-size:13px;font-weight:600">${b}</span>
-            <div style="text-align:right"><span style="font-size:14px;font-weight:700;color:var(--color-primary)">${r}</span><span style="font-size:11px;color:var(--color-gray);display:block">Up to ${t}</span></div>
-          </div>`).join('')}
-          <p style="font-size:11px;color:var(--color-gray);margin-top:8px">*Indicative rates. Contact us for exact offers.</p>
+
+        <div style="background:white;border-radius:16px;padding:32px;border:1px solid var(--color-border)">
+          <h3 style="font-size:20px;margin-bottom:20px">✅ Eligibility Criteria</h3>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:10px">
+            <li style="display:flex;align-items:flex-start;gap:10px"><span style="color:#27AE60;font-size:18px;flex-shrink:0">✓</span><span style="font-size:14px;color:var(--color-charcoal)">Age: 21–65 years</span></li>
+            <li style="display:flex;align-items:flex-start;gap:10px"><span style="color:#27AE60;font-size:18px;flex-shrink:0">✓</span><span style="font-size:14px;color:var(--color-charcoal)">Minimum income: ₹15,000/month</span></li>
+            <li style="display:flex;align-items:flex-start;gap:10px"><span style="color:#27AE60;font-size:18px;flex-shrink:0">✓</span><span style="font-size:14px;color:var(--color-charcoal)">Employment: Salaried or self-employed</span></li>
+            <li style="display:flex;align-items:flex-start;gap:10px"><span style="color:#27AE60;font-size:18px;flex-shrink:0">✓</span><span style="font-size:14px;color:var(--color-charcoal)">Credit score: 650+ (higher = better rates)</span></li>
+            <li style="display:flex;align-items:flex-start;gap:10px"><span style="color:#27AE60;font-size:18px;flex-shrink:0">✓</span><span style="font-size:14px;color:var(--color-charcoal)">Car age: Up to 10 years old</span></li>
+          </ul>
         </div>
+
         <div style="background:var(--color-primary);border-radius:12px;padding:24px;text-align:center;color:white">
-          <div style="font-size:32px;margin-bottom:10px">💬</div>
+          <div style="font-size:32px;margin-bottom:12px">📞</div>
           <h3 style="color:white;font-size:18px;margin-bottom:8px">Talk to a Loan Expert</h3>
-          <p style="color:rgba(255,255,255,.8);font-size:13px;margin-bottom:16px">Get personalised loan options in 10 minutes</p>
+          <p style="color:rgba(255,255,255,.8);font-size:13px;margin-bottom:16px">Get personalised loan advice within 1 hour</p>
           <a href="contact.html" style="display:block;padding:12px;background:white;color:var(--color-primary);border-radius:8px;font-weight:700;font-size:14px;text-decoration:none">Contact Us →</a>
         </div>
       </div>
@@ -122,57 +101,27 @@
   </div>
 </div>
 <div id="site-footer"></div>
+<script>
+function calcEMI() {
+  const P = parseFloat(document.getElementById('loanAmount').value) - parseFloat(document.getElementById('downPayment').value || 0);
+  const r = parseFloat(document.getElementById('interestRate').value) / 100 / 12;
+  const n = parseInt(document.getElementById('tenure').value);
+  if (P <= 0 || isNaN(r) || isNaN(n)) return;
+  const emi   = P * r * Math.pow(1+r,n) / (Math.pow(1+r,n) - 1);
+  const total = emi * n;
+  const intr  = total - P;
+  const fmt   = v => '₹' + Math.round(v).toLocaleString('en-IN');
+  document.getElementById('emiAmount').textContent     = fmt(emi);
+  document.getElementById('totalInterest').textContent = fmt(intr);
+  document.getElementById('totalPayment').textContent  = fmt(total);
+  document.getElementById('principalAmt').textContent  = fmt(P);
+  document.getElementById('emiResult').style.display   = 'block';
+}
+calcEMI();
+</script>
 <script type="module">
 import { injectHeader, injectFooter, initBackToTop } from '../assets/js/app.js';
 injectHeader(); injectFooter(); initBackToTop();
-</script>
-<script>
-function fmt(n){return '₹'+Math.round(n).toLocaleString('en-IN');}
-function updateCalc(){
-  const price=parseInt(document.getElementById('loanAmount').value)||0;
-  const down=parseInt(document.getElementById('downPayment').value)||0;
-  const P=Math.max(0,price-down);
-  const annRate=parseFloat(document.getElementById('interestRate').value)||9.5;
-  const r=annRate/12/100;
-  const n=parseInt(document.getElementById('loanTenure').value)||60;
-
-  document.getElementById('loanAmtDisplay').textContent=fmt(price);
-  document.getElementById('downDisplay').textContent=fmt(down);
-  document.getElementById('actualLoan').textContent=fmt(P);
-  document.getElementById('rateDisplay').textContent=annRate+'% p.a.';
-  const yr=Math.floor(n/12);const mo=n%12;
-  document.getElementById('tenureDisplay').textContent=(yr>0?yr+' year'+(yr>1?'s':''):'')+(mo>0?' '+mo+' mo':'');
-
-  if(P<=0||r<=0||n<=0){document.getElementById('emiResult').textContent='—';return;}
-  const emi=(P*r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);
-  const total=emi*n;
-  const interest=total-P;
-  const pPct=Math.round(P/total*100);
-
-  document.getElementById('emiResult').textContent=fmt(emi)+'/mo';
-  document.getElementById('totalInterest').textContent=fmt(interest);
-  document.getElementById('totalPayment').textContent=fmt(total);
-  document.getElementById('principalBar').style.width=pPct+'%';
-  document.getElementById('principalPct').textContent=pPct+'%';
-  document.getElementById('interestPct').textContent=(100-pPct)+'%';
-  buildAmortization(P,r,n,emi);
-}
-
-function buildAmortization(P,r,n,emi){
-  let bal=P;const rows=[];
-  for(let y=1;y<=Math.ceil(n/12);y++){
-    let prin=0,interest=0;
-    for(let m=0;m<12&&(y-1)*12+m<n;m++){
-      const int=bal*r;const p=emi-int;
-      interest+=int;prin+=p;bal=Math.max(0,bal-p);
-    }
-    rows.push(`<tr style="border-bottom:1px solid var(--color-light)"><td style="padding:9px 10px;border:1px solid var(--color-border)">Year ${y}</td><td style="padding:9px 10px;text-align:right;border:1px solid var(--color-border)">${fmt(prin)}</td><td style="padding:9px 10px;text-align:right;border:1px solid var(--color-border)">${fmt(interest)}</td><td style="padding:9px 10px;text-align:right;border:1px solid var(--color-border)">${fmt(bal)}</td></tr>`);
-  }
-  document.getElementById('amortBody').innerHTML=rows.join('');
-}
-
-window.toggleAmortization=function(){const t=document.getElementById('amortTable');t.style.display=t.style.display==='none'?'block':'none';}
-document.addEventListener('DOMContentLoaded',updateCalc);
 </script>
 </body>
 </html>

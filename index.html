@@ -321,9 +321,8 @@
 </style>
 
 <script type="module">
-import { injectHeader, injectFooter, getFeaturedCars, getCars, renderCarCard, initWishlist, initBackToTop, getSampleCars, submitEnquiry, showToast } from './assets/js/app.js';
+import { injectHeader, injectFooter, getFeaturedCars, getCars, renderCarCard, initWishlist, initBackToTop, initCarousels, getSampleCars, submitEnquiry, showToast } from './assets/js/app.js';
 
-// Inject shell
 injectHeader();
 injectFooter();
 initWishlist();
@@ -343,48 +342,46 @@ window.heroSearchGo = function() {
   const q = document.getElementById('heroSearch')?.value?.trim();
   if (q) window.location.href = `pages/cars.html?search=${encodeURIComponent(q)}`;
 };
-
 document.getElementById('heroSearch')?.addEventListener('keydown', e => { if (e.key === 'Enter') heroSearchGo(); });
 
 // Load brands
-async function loadBrands() {
-  const brands = ['Maruti Suzuki','Hyundai','Tata Motors','Honda','Toyota','Ford','Volkswagen','Kia','Renault','Mahindra','Nissan','Skoda'];
-  const grid = document.getElementById('brandsGrid');
-  if (!grid) return;
-  grid.innerHTML = brands.map(b => `
-    <a href="pages/cars.html?brand=${encodeURIComponent(b)}" class="brand-card">
-      <div style="height:48px;display:flex;align-items:center;justify-content:center">
-        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="1.5"><path d="M5 17H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l3-4h10l3 4h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg>
-      </div>
-      <span>${b}</span>
-    </a>`).join('');
-}
+const brands = ['Maruti Suzuki','Hyundai','Tata Motors','Honda','Toyota','Ford','Volkswagen','Kia','Renault','Mahindra','Nissan','Skoda'];
+const grid = document.getElementById('brandsGrid');
+if (grid) grid.innerHTML = brands.map(b => `
+  <a href="pages/cars.html?brand=${encodeURIComponent(b)}" class="brand-card">
+    <div style="height:48px;display:flex;align-items:center;justify-content:center">
+      <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="1.5"><path d="M5 17H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l3-4h10l3 4h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg>
+    </div>
+    <span>${b}</span>
+  </a>`).join('');
 
-// Load featured cars
-async function loadFeatured() {
-  const row = document.getElementById('featuredCarsRow');
-  if (!row) return;
-  try {
-    const cars = await getFeaturedCars(8);
-    row.innerHTML = cars.length ? cars.map(renderCarCard).join('') : '<p style="padding:40px;text-align:center;color:var(--color-gray)">No listings yet.</p>';
-  } catch(e) {
-    const cars = getSampleCars().slice(0,8);
-    row.innerHTML = cars.map(renderCarCard).join('');
-  }
-}
+// Immediately show sample cars — no skeleton loading state
+const sampleCars = getSampleCars();
+const featRow   = document.getElementById('featuredCarsRow');
+const recentRow = document.getElementById('recentCarsRow');
+if (featRow)   featRow.innerHTML   = sampleCars.map(renderCarCard).join('');
+if (recentRow) recentRow.innerHTML = sampleCars.slice().reverse().map(renderCarCard).join('');
 
-// Load recent cars
-async function loadRecent() {
-  const row = document.getElementById('recentCarsRow');
-  if (!row) return;
+// Initialise swipe/drag after sample cars are shown
+initCarousels();
+
+// Then silently try to load real data from Firebase in background
+(async () => {
   try {
-    const cars = await getCars({ sort: 'date' });
-    row.innerHTML = cars.slice(0,8).map(renderCarCard).join('') || '<p style="padding:40px;text-align:center;color:var(--color-gray)">No listings yet.</p>';
-  } catch(e) {
-    const cars = getSampleCars().slice(0,8);
-    row.innerHTML = cars.map(renderCarCard).join('');
-  }
-}
+    const featured = await getFeaturedCars(8);
+    if (featured.length && featRow) {
+      featRow.innerHTML = featured.map(renderCarCard).join('');
+    }
+  } catch(e) {}
+})();
+(async () => {
+  try {
+    const recent = await getCars({ sort: 'date' });
+    if (recent.length && recentRow) {
+      recentRow.innerHTML = recent.slice(0,8).map(renderCarCard).join('');
+    }
+  } catch(e) {}
+})();
 
 // Quick sell form
 document.getElementById('quickSellForm')?.addEventListener('submit', async e => {
@@ -398,15 +395,11 @@ document.getElementById('quickSellForm')?.addEventListener('submit', async e => 
   msg.style.cssText += ok
     ? ';background:#f0fdf4;border:1px solid #bbf7d0;color:#16a34a'
     : ';background:#fef2f2;border:1px solid #fecaca;color:#dc2626';
-  msg.textContent = ok ? '✅ Submitted! We'll contact you shortly.' : '❌ Error. Please try again.';
+  msg.textContent = ok ? '✅ Submitted! We\'ll contact you shortly.' : '❌ Error. Please try again.';
   if (ok) e.target.reset();
   btn.textContent = 'Get Free Valuation & List My Car'; btn.disabled = false;
 });
-
-// Init all
-loadBrands();
-loadFeatured();
-loadRecent();
 </script>
+
 </body>
 </html>

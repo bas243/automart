@@ -9,6 +9,8 @@
 </head>
 <body>
 <div id="site-header"></div>
+
+<!-- HERO -->
 <div style="background:linear-gradient(135deg,var(--color-dark) 0%,var(--color-primary) 100%);padding:80px 0;text-align:center">
   <div class="container">
     <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">EST. 2018 · INDIA'S TRUSTED MARKETPLACE</p>
@@ -17,22 +19,38 @@
   </div>
 </div>
 
+<!-- STATS -->
 <div style="background:white;padding:48px 0;border-bottom:1px solid var(--color-border)">
   <div class="container">
     <div class="stats-row">
-      ${[['50,000+','Car Listings','🚗'],['1 Lakh+','Happy Customers','😊'],['200+','Cities Covered','📍'],['7 Years','In Business','🏆']].map(([n,l,ic])=>`
       <div class="stat-card" style="text-align:center;padding:28px;border:1px solid var(--color-border);border-radius:16px">
-        <div style="font-size:32px;margin-bottom:8px">${ic}</div>
-        <div style="font-family:'Rajdhani',sans-serif;font-size:44px;color:var(--color-primary);font-weight:700">${n}</div>
-        <p style="color:var(--color-gray);font-size:14px;margin-top:6px">${l}</p>
-      </div>`).join('')}
+        <div style="font-size:32px;margin-bottom:8px">🚗</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:44px;color:var(--color-primary);font-weight:700">50,000+</div>
+        <p style="color:var(--color-gray);font-size:14px;margin-top:6px">Car Listings</p>
+      </div>
+      <div class="stat-card" style="text-align:center;padding:28px;border:1px solid var(--color-border);border-radius:16px">
+        <div style="font-size:32px;margin-bottom:8px">😊</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:44px;color:var(--color-primary);font-weight:700">1 Lakh+</div>
+        <p style="color:var(--color-gray);font-size:14px;margin-top:6px">Happy Customers</p>
+      </div>
+      <div class="stat-card" style="text-align:center;padding:28px;border:1px solid var(--color-border);border-radius:16px">
+        <div style="font-size:32px;margin-bottom:8px">📍</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:44px;color:var(--color-primary);font-weight:700">200+</div>
+        <p style="color:var(--color-gray);font-size:14px;margin-top:6px">Cities Covered</p>
+      </div>
+      <div class="stat-card" style="text-align:center;padding:28px;border:1px solid var(--color-border);border-radius:16px">
+        <div style="font-size:32px;margin-bottom:8px">🏆</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:44px;color:var(--color-primary);font-weight:700">7 Years</div>
+        <p style="color:var(--color-gray);font-size:14px;margin-top:6px">In Business</p>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- MISSION -->
 <div style="padding:64px 0">
   <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+    <div class="about-mission-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
       <div>
         <h2 class="section-title" style="margin-bottom:20px">Our Mission</h2>
         <p style="font-size:16px;color:var(--color-charcoal);line-height:1.8;margin-bottom:16px">At AutoMart, our mission is to create India's most trusted platform for buying and selling pre-owned vehicles. We believe every Indian deserves access to quality, affordable transportation.</p>
@@ -41,30 +59,63 @@
       </div>
       <div style="background:var(--color-light);border-radius:16px;padding:36px">
         <h3 style="font-size:20px;margin-bottom:24px">Our Core Values</h3>
-        ${[['🔍','Transparency','No hidden fees, no misleading information.'],['🛡️','Trust & Safety','Every listing is verified. Every transaction is secure.'],['💡','Innovation','AI and data to give you the most accurate valuations.'],['🤝','Customer First','Support team always ready to help buyers and sellers.']].map(([ic,t,d])=>`
-        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:20px"><span style="font-size:24px;flex-shrink:0">${ic}</span><div><h4 style="font-size:15px;margin-bottom:4px">${t}</h4><p style="font-size:13px;color:var(--color-gray)">${d}</p></div></div>`).join('')}
+        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:20px">
+          <span style="font-size:24px;flex-shrink:0">🔍</span>
+          <div><h4 style="font-size:15px;margin-bottom:4px">Transparency</h4><p style="font-size:13px;color:var(--color-gray)">No hidden fees, no misleading information.</p></div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:20px">
+          <span style="font-size:24px;flex-shrink:0">🛡️</span>
+          <div><h4 style="font-size:15px;margin-bottom:4px">Trust &amp; Safety</h4><p style="font-size:13px;color:var(--color-gray)">Every listing is verified. Every transaction is secure.</p></div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:20px">
+          <span style="font-size:24px;flex-shrink:0">💡</span>
+          <div><h4 style="font-size:15px;margin-bottom:4px">Innovation</h4><p style="font-size:13px;color:var(--color-gray)">AI and data to give you the most accurate valuations.</p></div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:20px">
+          <span style="font-size:24px;flex-shrink:0">🤝</span>
+          <div><h4 style="font-size:15px;margin-bottom:4px">Customer First</h4><p style="font-size:13px;color:var(--color-gray)">Support team always ready to help buyers and sellers.</p></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- TEAM -->
 <div style="background:var(--color-light);padding:64px 0">
   <div class="container">
     <div style="text-align:center;margin-bottom:48px">
       <h2 class="section-title" style="display:inline-block">Meet Our Team</h2>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px">
-      ${[['Rajesh Kumar','CEO & Co-Founder','R','#C0392B','15+ years in automotive'],['Priya Sharma','CTO & Co-Founder','P','#2980B9','Ex-Google, AI specialist'],['Amit Singh','Head of Operations','A','#27AE60','Built ops across 200+ cities'],['Divya Patel','Head of Support','D','#8E44AD','1L+ customers assisted']].map(([n,r,i,c,b])=>`
       <div style="background:white;border-radius:12px;padding:24px;text-align:center;border:1px solid var(--color-border)">
-        <div style="width:72px;height:72px;background:${c};border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:28px;font-weight:700;margin:0 auto 14px">${i}</div>
-        <h3 style="font-size:17px;margin-bottom:4px">${n}</h3>
-        <p style="font-size:12px;color:var(--color-primary);font-weight:600;margin-bottom:8px">${r}</p>
-        <p style="font-size:12px;color:var(--color-gray)">${b}</p>
-      </div>`).join('')}
+        <div style="width:72px;height:72px;background:#C0392B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:28px;font-weight:700;margin:0 auto 14px">R</div>
+        <h3 style="font-size:17px;margin-bottom:4px">Rajesh Kumar</h3>
+        <p style="font-size:12px;color:var(--color-primary);font-weight:600;margin-bottom:8px">CEO &amp; Co-Founder</p>
+        <p style="font-size:12px;color:var(--color-gray)">15+ years in automotive</p>
+      </div>
+      <div style="background:white;border-radius:12px;padding:24px;text-align:center;border:1px solid var(--color-border)">
+        <div style="width:72px;height:72px;background:#2980B9;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:28px;font-weight:700;margin:0 auto 14px">P</div>
+        <h3 style="font-size:17px;margin-bottom:4px">Priya Sharma</h3>
+        <p style="font-size:12px;color:var(--color-primary);font-weight:600;margin-bottom:8px">CTO &amp; Co-Founder</p>
+        <p style="font-size:12px;color:var(--color-gray)">Ex-Google, AI specialist</p>
+      </div>
+      <div style="background:white;border-radius:12px;padding:24px;text-align:center;border:1px solid var(--color-border)">
+        <div style="width:72px;height:72px;background:#27AE60;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:28px;font-weight:700;margin:0 auto 14px">A</div>
+        <h3 style="font-size:17px;margin-bottom:4px">Amit Singh</h3>
+        <p style="font-size:12px;color:var(--color-primary);font-weight:600;margin-bottom:8px">Head of Operations</p>
+        <p style="font-size:12px;color:var(--color-gray)">Built ops across 200+ cities</p>
+      </div>
+      <div style="background:white;border-radius:12px;padding:24px;text-align:center;border:1px solid var(--color-border)">
+        <div style="width:72px;height:72px;background:#8E44AD;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:28px;font-weight:700;margin:0 auto 14px">D</div>
+        <h3 style="font-size:17px;margin-bottom:4px">Divya Patel</h3>
+        <p style="font-size:12px;color:var(--color-primary);font-weight:600;margin-bottom:8px">Head of Support</p>
+        <p style="font-size:12px;color:var(--color-gray)">1L+ customers assisted</p>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- CTA -->
 <div style="background:var(--color-dark);padding:64px 0;text-align:center">
   <div class="container">
     <h2 style="color:white;font-size:clamp(28px,4vw,42px);margin-bottom:16px;font-family:'Rajdhani',sans-serif">Ready to Buy or Sell?</h2>
@@ -75,6 +126,7 @@
     </div>
   </div>
 </div>
+
 <div id="site-footer"></div>
 <script type="module">
 import { injectHeader, injectFooter, initBackToTop } from '../assets/js/app.js';

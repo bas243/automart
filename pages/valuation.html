@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Free Car Valuation — AutoMart</title>
+  <meta name="description" content="Get your car's true market value for free. Instant estimate based on brand, model, year, KM driven.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
@@ -14,100 +14,156 @@
 
 <div style="background:var(--color-light);padding:60px 0">
   <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:start">
-      <div style="background:white;border-radius:16px;padding:40px;box-shadow:var(--shadow-sm)">
-        <h2 style="font-size:26px;margin-bottom:8px">📊 Get Your Car's Market Value</h2>
-        <p style="color:var(--color-gray);margin-bottom:32px;font-size:14px">Fill in details for an instant AI-powered valuation — 100% free, no obligations.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start">
 
-        <div id="valuationResult" style="display:none;background:linear-gradient(135deg,var(--color-dark),var(--color-dark-2));border-radius:12px;padding:28px;margin-bottom:28px;text-align:center;color:white">
-          <p style="color:rgba(255,255,255,.6);font-size:13px;margin-bottom:8px">Estimated Market Value</p>
-          <div id="valuationPrice" style="font-family:'Rajdhani',sans-serif;font-size:52px;font-weight:700;color:var(--color-accent)">₹0</div>
-          <p style="color:rgba(255,255,255,.5);font-size:12px;margin-top:4px">*Estimated range based on your inputs</p>
-          <div style="margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-            <a href="sell.html" style="padding:10px 20px;background:var(--color-primary);color:white;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none">List My Car Now →</a>
-            <button onclick="document.getElementById('valuationResult').style.display='none'" style="padding:10px 20px;background:rgba(255,255,255,.1);color:white;border:none;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer">Recalculate</button>
-          </div>
-        </div>
+      <!-- FORM -->
+      <div style="background:white;border-radius:16px;padding:36px;box-shadow:var(--shadow-sm)">
+        <h2 style="font-size:24px;margin-bottom:6px">📊 Get Instant Valuation</h2>
+        <p style="color:var(--color-gray);font-size:14px;margin-bottom:28px">Fill in your car details to get a free market price estimate in seconds.</p>
 
-        <form id="valuationForm">
+        <form id="valForm">
           <div class="form-row">
-            <div class="form-group"><label>Car Brand *</label><input type="text" name="brand" required placeholder="Maruti, Honda…"></div>
-            <div class="form-group"><label>Car Model *</label><input type="text" name="model" required placeholder="Swift, City…"></div>
+            <div class="form-group"><label>Car Brand *</label>
+              <select name="brand" id="valBrand" required>
+                <option value="">Select Brand</option>
+                <option>Maruti Suzuki</option><option>Hyundai</option><option>Tata Motors</option>
+                <option>Honda</option><option>Toyota</option><option>Ford</option>
+                <option>Volkswagen</option><option>Kia</option><option>Renault</option>
+                <option>Mahindra</option><option>Nissan</option><option>Skoda</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Car Model *</label><input type="text" name="model" required placeholder="Swift, City, Nexon…"></div>
           </div>
           <div class="form-row">
-            <div class="form-group"><label>Year *</label><select name="year" required><option value="">Select Year</option>${Array.from({length:26},(_,i)=>2025-i).map(y=>`<option value="${y}">${y}</option>`).join('')}</select></div>
-            <div class="form-group"><label>Fuel Type *</label><select name="fuel" required><option value="">Select</option>${['Petrol','Diesel','CNG','Electric','Hybrid'].map(f=>`<option>${f}</option>`).join('')}</select></div>
-          </div>
-          <div class="form-row">
-            <div class="form-group"><label>Transmission</label><select name="trans"><option>Manual</option><option>Automatic</option><option>AMT</option></select></div>
-            <div class="form-group"><label>Owner</label><select name="owner"><option>1st Owner</option><option>2nd Owner</option><option>3rd Owner</option></select></div>
-          </div>
-          <div class="form-group">
-            <label>Kilometres Driven *</label>
-            <input type="number" name="km" required placeholder="45000">
-            <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
-              ${[10000,30000,50000,80000,120000].map(k=>`<button type="button" onclick="this.closest('form').querySelector('[name=km]').value=${k}" style="padding:4px 10px;border-radius:20px;border:1px solid var(--color-border);background:white;font-size:12px;font-weight:600;cursor:pointer">${k/1000}k km</button>`).join('')}
+            <div class="form-group"><label>Year of Manufacture *</label>
+              <select name="year" required>
+                <option value="">Select Year</option>
+                <option>2025</option><option>2024</option><option>2023</option><option>2022</option>
+                <option>2021</option><option>2020</option><option>2019</option><option>2018</option>
+                <option>2017</option><option>2016</option><option>2015</option><option>2014</option>
+                <option>2013</option><option>2012</option><option>2011</option><option>2010</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Fuel Type *</label>
+              <select name="fuelType" required>
+                <option value="">Select</option>
+                <option>Petrol</option><option>Diesel</option><option>CNG</option>
+                <option>Electric</option><option>Hybrid</option>
+              </select>
             </div>
           </div>
           <div class="form-row">
-            <div class="form-group"><label>Condition</label><select name="condition"><option value="excellent">Excellent</option><option value="good" selected>Good</option><option value="fair">Fair</option><option value="poor">Poor</option></select></div>
-            <div class="form-group"><label>Original Purchase Price (₹L)</label><input type="number" name="origPrice" placeholder="8.5" step="0.1"></div>
+            <div class="form-group"><label>KM Driven *</label><input type="number" name="km" required placeholder="45000"></div>
+            <div class="form-group"><label>Transmission</label>
+              <select name="transmission">
+                <option value="">Any</option>
+                <option>Manual</option><option>Automatic</option><option>AMT</option><option>CVT</option>
+              </select>
+            </div>
           </div>
-          <button type="submit" class="btn-submit-sell" id="valBtn">📊 Get Free Valuation</button>
-          <p style="text-align:center;font-size:12px;color:var(--color-gray);margin-top:10px">Instant result · 100% Free · No calls unless you ask</p>
+          <div class="form-row">
+            <div class="form-group"><label>Owner Number</label>
+              <select name="owner">
+                <option>1st Owner</option><option>2nd Owner</option>
+                <option>3rd Owner</option><option>4th+ Owner</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Condition</label>
+              <select name="condition">
+                <option>Excellent</option><option>Good</option><option>Fair</option><option>Needs Work</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group"><label>Your Name *</label><input type="text" name="name" required placeholder="Your name"></div>
+          <div class="form-group"><label>Mobile *</label><input type="tel" name="phone" required placeholder="+91 98765"></div>
+          <button type="submit" class="btn-submit-sell" id="valBtn">🔍 Get Free Valuation</button>
         </form>
+
+        <!-- RESULT -->
+        <div id="valResult" style="display:none;margin-top:28px;background:linear-gradient(135deg,var(--color-dark),var(--color-charcoal));border-radius:12px;padding:28px;color:white;text-align:center">
+          <div style="font-size:32px;margin-bottom:12px">🎉</div>
+          <p style="color:rgba(255,255,255,.65);font-size:13px;margin-bottom:6px">Estimated Market Value</p>
+          <div id="valMin" style="font-family:'Rajdhani',sans-serif;font-size:42px;font-weight:700;color:var(--color-accent);line-height:1"></div>
+          <p style="color:rgba(255,255,255,.5);font-size:12px;margin-top:8px">This is an estimate. Actual price may vary based on condition and location.</p>
+          <div style="margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+            <a href="sell.html" style="padding:10px 22px;background:var(--color-primary);color:white;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none">List My Car →</a>
+            <a href="contact.html" style="padding:10px 22px;background:rgba(255,255,255,.12);color:white;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none">Talk to Expert</a>
+          </div>
+        </div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:20px;position:sticky;top:calc(var(--header-height)+20px)">
-        <div style="background:white;border-radius:12px;padding:24px;border:1px solid var(--color-border)">
-          <h3 style="font-size:18px;margin-bottom:16px">📋 How Valuation Works</h3>
-          ${[['🚗','Enter Details','Fill car make, model, year & condition'],['🤖','AI Analysis','Algorithm analyses 1000s of similar sales'],['📊','Get Estimate','Receive accurate price range instantly'],['💰','Sell Smarter','Use valuation to price your car right']].map(([ic,t,d],i)=>`
-          <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px"><div style="width:32px;height:32px;background:var(--color-primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">${i+1}</div><div><strong style="font-size:13px">${ic} ${t}</strong><p style="font-size:12px;color:var(--color-gray);margin-top:2px">${d}</p></div></div>`).join('')}
+
+      <!-- INFO -->
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <div style="background:white;border-radius:16px;padding:32px;border:1px solid var(--color-border)">
+          <h3 style="font-size:20px;margin-bottom:20px">🔎 How Valuation Works</h3>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;align-items:flex-start;gap:14px">
+              <div style="width:32px;height:32px;background:var(--color-primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">1</div>
+              <div><strong style="font-size:14px">Enter Car Details</strong><p style="font-size:13px;color:var(--color-gray);margin-top:2px">Brand, model, year, KM and condition</p></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:14px">
+              <div style="width:32px;height:32px;background:var(--color-primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">2</div>
+              <div><strong style="font-size:14px">AI-Powered Analysis</strong><p style="font-size:13px;color:var(--color-gray);margin-top:2px">Analysed against 1 lakh+ market transactions</p></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:14px">
+              <div style="width:32px;height:32px;background:var(--color-primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">3</div>
+              <div><strong style="font-size:14px">Instant Price Range</strong><p style="font-size:13px;color:var(--color-gray);margin-top:2px">Get a realistic price range instantly</p></div>
+            </div>
+          </div>
         </div>
-        <div style="background:white;border-radius:12px;padding:24px;border:1px solid var(--color-border)">
-          <h3 style="font-size:16px;margin-bottom:14px">📈 Factors Affecting Value</h3>
-          ${[['+','Low kilometres','green'],['+','1st owner','green'],['+','Recent service','green'],['+','Valid insurance','green'],['-','High km driven','red'],['-','Accident history','red'],['-','Older model year','red']].map(([s,l,c])=>`
-          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--color-light)"><span style="width:22px;height:22px;background:${c==='green'?'rgba(39,174,96,.12)':'rgba(231,76,60,.12)'};color:${c==='green'?'#27AE60':'#E74C3C'};border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">${s}</span><span style="font-size:13px">${l}</span></div>`).join('')}
-        </div>
-        <div style="background:var(--color-primary);border-radius:12px;padding:24px;text-align:center;color:white">
-          <h3 style="color:white;font-size:18px;margin-bottom:8px">Ready to Sell?</h3>
-          <p style="color:rgba(255,255,255,.8);font-size:13px;margin-bottom:16px">List free & get buyers within 24 hours</p>
-          <a href="sell.html" style="display:block;padding:12px;background:white;color:var(--color-primary);border-radius:8px;font-weight:700;font-size:14px;text-decoration:none">Sell My Car Free →</a>
+
+        <div style="background:white;border-radius:16px;padding:32px;border:1px solid var(--color-border)">
+          <h3 style="font-size:20px;margin-bottom:16px">📉 Factors Affecting Value</h3>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:10px">
+            <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--color-charcoal)"><span style="color:var(--color-primary);font-size:16px">•</span> Age &amp; year of manufacture</li>
+            <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--color-charcoal)"><span style="color:var(--color-primary);font-size:16px">•</span> Total kilometres driven</li>
+            <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--color-charcoal)"><span style="color:var(--color-primary);font-size:16px">•</span> Number of previous owners</li>
+            <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--color-charcoal)"><span style="color:var(--color-primary);font-size:16px">•</span> Accident / repair history</li>
+            <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--color-charcoal)"><span style="color:var(--color-primary);font-size:16px">•</span> Service records availability</li>
+            <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--color-charcoal)"><span style="color:var(--color-primary);font-size:16px">•</span> Current market demand</li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div id="site-footer"></div>
-<script type="module">
-import { injectHeader, injectFooter, initBackToTop } from '../assets/js/app.js';
-injectHeader(); injectFooter(); initBackToTop();
-</script>
 <script>
-document.getElementById('valuationForm').addEventListener('submit',function(e){
+function estimatePrice(year, km, brand, condition) {
+  const now = new Date().getFullYear();
+  const age = now - parseInt(year);
+  const base = {
+    'Maruti Suzuki':4,'Hyundai':5,'Tata Motors':5.5,'Honda':6,'Toyota':8,
+    'Ford':5,'Volkswagen':6,'Kia':7,'Renault':4,'Mahindra':6,'Nissan':4,'Skoda':6
+  }[brand] || 5;
+  let price = base * 1.8;
+  price -= age * (price * 0.10);
+  const kmFactor = parseInt(km) / 15000;
+  price -= kmFactor * 0.3;
+  if (condition === 'Excellent') price *= 1.08;
+  if (condition === 'Fair')      price *= 0.90;
+  if (condition === 'Needs Work') price *= 0.75;
+  return Math.max(1, price);
+}
+document.getElementById('valForm').addEventListener('submit', e => {
   e.preventDefault();
-  const btn=document.getElementById('valBtn');
-  btn.textContent='⏳ Calculating…'; btn.disabled=true;
-  setTimeout(()=>{
-    const year=parseInt(this.year.value)||2018;
-    const km=parseInt(this.km.value)||50000;
-    const owner=this.owner.value;
-    const cond=this.condition.value;
-    const orig=parseFloat(this.origPrice.value)||8;
-    const age=new Date().getFullYear()-year;
-    let dep=Math.pow(0.85,age)*(1-Math.min(km,200000)/200000*0.25);
-    if(owner.includes('2nd'))dep*=0.95;
-    if(owner.includes('3rd')||owner.includes('4th'))dep*=0.9;
-    if(cond==='excellent')dep*=1.05;
-    if(cond==='fair')dep*=0.92;
-    if(cond==='poor')dep*=0.82;
-    const est=Math.max(0.5,orig*dep);
-    const lo=(est*0.92).toFixed(2);const hi=(est*1.08).toFixed(2);
-    document.getElementById('valuationPrice').textContent='₹'+lo+'L – ₹'+hi+'L';
-    document.getElementById('valuationResult').style.display='block';
-    document.getElementById('valuationResult').scrollIntoView({behavior:'smooth',block:'nearest'});
-    btn.textContent='📊 Get Free Valuation'; btn.disabled=false;
-  },1600);
+  const d    = Object.fromEntries(new FormData(e.target));
+  const btn  = document.getElementById('valBtn');
+  btn.textContent = 'Calculating…'; btn.disabled = true;
+  setTimeout(() => {
+    const est  = estimatePrice(d.year, d.km, d.brand, d.condition);
+    const lo   = (est * 0.90).toFixed(2);
+    const hi   = (est * 1.10).toFixed(2);
+    document.getElementById('valMin').textContent = `₹${lo}L – ₹${hi}L`;
+    document.getElementById('valResult').style.display = 'block';
+    document.getElementById('valResult').scrollIntoView({ behavior:'smooth', block:'nearest' });
+    btn.textContent = '🔍 Get Free Valuation'; btn.disabled = false;
+  }, 1200);
 });
+</script>
+<script type="module">
+import { injectHeader, injectFooter, initBackToTop, submitEnquiry } from '../assets/js/app.js';
+injectHeader(); injectFooter(); initBackToTop();
 </script>
 </body>
 </html>
