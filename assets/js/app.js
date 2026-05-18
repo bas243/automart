@@ -10,7 +10,16 @@ import {
 } from './firebase-config.js';
 
 /* ═══════════════════════════════════════════════════════════
-   SITE CONFIG  (edit these!)
+   AUTO-DETECT BASE URL
+   Works on localhost, GitHub Pages /repo-name/, or any subdir.
+   No manual config needed — reads from the script's own URL.
+═══════════════════════════════════════════════════════════ */
+const _p    = new URL(import.meta.url).pathname.split('/');
+const _ai   = _p.indexOf('assets');
+const _base = _ai > 1 ? _p.slice(0, _ai).join('/') : '';
+
+/* ═══════════════════════════════════════════════════════════
+   SITE CONFIG  (baseUrl is auto-detected above)
 ═══════════════════════════════════════════════════════════ */
 export const SITE = {
   name:        'AutoMart',
@@ -20,7 +29,7 @@ export const SITE = {
   address:     'Mumbai, Maharashtra, India',
   whatsapp:    '919876543210',
   currency:    '₹',
-  baseUrl:     '',          // leave blank for GitHub Pages root, or set '/repo-name'
+  baseUrl:     _base,   // auto-detected: '' on root, '/repo-name' on GitHub Pages
   primaryColor:'#C0392B',
 };
 
